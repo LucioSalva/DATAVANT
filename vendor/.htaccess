@@ -1,0 +1,2 @@
+# Block all web access to vendor files
+Require all denied

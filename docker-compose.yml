@@ -1,0 +1,42 @@
+# ============================================
+# DATAVANT Systems - Docker Compose
+# PHP 8.2 + Apache corporate website
+# ============================================
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: datavant-web
+    ports:
+      - "8088:80"
+    # Dev: bind-mount the source tree for live editing.
+    # Prod: comment out the bind mount and switch to the named volume below.
+    volumes:
+      - .:/var/www/html
+      # - dv_site:/var/www/html  # prod: use named volume instead of bind
+    working_dir: /var/www/html
+    restart: unless-stopped
+    environment:
+      - APP_ENV=${APP_ENV:-development}
+      - APP_URL_SCHEME=${APP_URL_SCHEME:-http}
+      - APACHE_DOCUMENT_ROOT=/var/www/html
+      - SMTP_HOST=${SMTP_HOST:-smtp.gmail.com}
+      - SMTP_PORT=${SMTP_PORT:-587}
+      - SMTP_USER=${SMTP_USER:-}
+      - SMTP_PASS=${SMTP_PASS:-}
+      - SMTP_SECURE=${SMTP_SECURE:-tls}
+      - SMTP_FROM_EMAIL=${SMTP_FROM_EMAIL:-}
+      - SMTP_FROM_NAME=${SMTP_FROM_NAME:-DATAVANT Systems}
+      - CONTACT_TO_EMAIL=${CONTACT_TO_EMAIL:-}
+      - LOG_IP_SALT=${LOG_IP_SALT:-}
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost/"]
+      interval: 30s
+      timeout: 5s
+      start_period: 15s
+      retries: 3
+
+# volumes:
+#   dv_site:  # production named volume

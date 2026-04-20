@@ -1,0 +1,73 @@
+// ============================================
+// DATAVANT Systems - Card Components
+// Generic card system consumed across utility pages. Premium hover comes
+// from the @include premium-card-hover mixin.
+// ============================================
+
+.dv-card {
+  background: var(--dv-bg-elevated);
+  border: 1px solid var(--dv-border-subtle);
+  border-radius: $border-radius-xl;
+  padding: 30px;
+  box-shadow: var(--dv-shadow-sm);
+  @include premium-card-hover;
+
+  &--elevated {
+    @extend .dv-card;
+    box-shadow: var(--dv-shadow-md);
+
+    @media (hover: hover) and (pointer: fine) {
+      &:hover {
+        box-shadow: var(--dv-shadow-lg), var(--dv-shadow-glow);
+      }
+    }
+  }
+
+  &--bordered {
+    @extend .dv-card;
+    border-left: 3px solid var(--dv-accent);
+  }
+}
+
+.dv-icon-box {
+  width: 52px;
+  height: 52px;
+  @include flex-center;
+  background: var(--dv-accent-soft);
+  border: 1px solid var(--dv-accent-border);
+  border-radius: $border-radius-lg;
+  color: var(--dv-accent);
+  font-size: 20px;
+  flex-shrink: 0;
+  transition: background-color 200ms $ease-out, border-color 200ms $ease-out, transform 200ms $ease-out;
+
+  svg {
+    display: block;
+  }
+}
+
+.dv-feature-row {
+  display: flex;
+  gap: 25px;
+  padding: 30px 0;
+  border-bottom: 1px solid var(--dv-border-subtle);
+  align-items: flex-start;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  .feature-text {
+    h4 {
+      font-size: 18px;
+      color: var(--dv-text-primary);
+      margin-bottom: 8px;
+    }
+
+    p {
+      font-size: 14px;
+      color: var(--dv-text-secondary);
+      margin: 0;
+    }
+  }
+}

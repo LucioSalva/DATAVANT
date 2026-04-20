@@ -1,0 +1,114 @@
+// ============================================
+// DATAVANT Systems - Animations
+// Theme-agnostic motion primitives. Colors where unavoidable use the brand
+// primitives ($mint-glow) — keyframes cannot re-evaluate CSS vars per theme,
+// so we leave the brand glow keyframe as-is (the glow reads as decorative
+// brand flair in both themes).
+// ============================================
+
+// Fade in on scroll — strong ease-out, duration under 500ms
+.dv-animate {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 400ms $ease-out, transform 400ms $ease-out;
+
+  &.animated {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Stagger delays — keep short (30-80ms) so UI doesn't feel slow
+.dv-animate-delay-1 { transition-delay: 40ms; }
+.dv-animate-delay-2 { transition-delay: 80ms; }
+.dv-animate-delay-3 { transition-delay: 120ms; }
+.dv-animate-delay-4 { transition-delay: 160ms; }
+.dv-animate-delay-5 { transition-delay: 200ms; }
+
+// Fade from left
+.dv-animate-left {
+  opacity: 0;
+  transform: translateX(-24px);
+  transition: opacity 400ms $ease-out, transform 400ms $ease-out;
+
+  &.animated {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+// Fade from right
+.dv-animate-right {
+  opacity: 0;
+  transform: translateX(24px);
+  transition: opacity 400ms $ease-out, transform 400ms $ease-out;
+
+  &.animated {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+// Scale in — start from 0.95 (never scale(0))
+.dv-animate-scale {
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 350ms $ease-out, transform 350ms $ease-out;
+
+  &.animated {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+// Pulse glow — decorative brand flare. Keyframe stops can't read CSS vars
+// per theme at animation-time, so we keep the mint primitive. The glow is
+// decorative and stays in brand palette in both themes.
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba($mint-glow, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba($mint-glow, 0.2);
+  }
+}
+
+// Subtle float
+@keyframes subtleFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.float-animation {
+  animation: subtleFloat 6s ease-in-out infinite;
+}
+
+// Line draw
+@keyframes drawLine {
+  from { width: 0; }
+  to { width: 50px; }
+}
+
+// Counter animation helper
+.counter-animated {
+  transition: $transition-slow;
+}
+
+// Accessibility — reduced motion: keep opacity, drop movement
+@media (prefers-reduced-motion: reduce) {
+  .dv-animate,
+  .dv-animate-left,
+  .dv-animate-right,
+  .dv-animate-scale {
+    transform: none;
+    transition: opacity 200ms ease;
+  }
+
+  .float-animation {
+    animation: none;
+  }
+}

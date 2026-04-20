@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <rect x="0" y="0" width="32" height="32" rx="6" ry="6" fill="#000000"/>
+  <rect x="4" y="4" width="24" height="24" rx="5" ry="5" fill="none" stroke="#81F076" stroke-width="1.6"/>
+  <text x="16" y="17" text-anchor="middle" dominant-baseline="middle" font-family="Ubuntu, Segoe UI, Arial, sans-serif" font-weight="700" font-size="12" fill="#81F076">DV</text>
+</svg>

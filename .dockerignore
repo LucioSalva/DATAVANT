@@ -1,0 +1,51 @@
+# ============================================
+# DATAVANT Systems - Docker Build Ignore
+# ============================================
+
+# Version control
+.git
+.gitignore
+
+# Docker files (no need to copy into image context)
+Dockerfile
+docker-compose.yml
+docker-compose.override.yml
+.dockerignore
+
+# IDE / Editor
+.vscode
+.idea
+*.sublime-project
+*.sublime-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Environment / Secrets
+.env
+.env.*
+!.env.example
+
+# Dependencies
+node_modules
+composer.lock
+# Note: vendor/ is NOT excluded -- PHPMailer lives there.
+
+# Log files (but keep logs/.htaccess for directory protection)
+logs/*.log
+logs/rate_limit.json
+logs/events_*.log
+logs/contact_*.log
+
+# Claude / AI tooling
+.claude
+
+# Tool lockfiles / docs
+skills-lock.json
+SECURITY.md
+
+# Documentation
+*.md
+LICENSE

@@ -1,0 +1,191 @@
+// ============================================
+// DATAVANT Systems - Design Tokens
+// Single source of truth for runtime color + surface tokens.
+//
+// ARCHITECTURE:
+//   1. Primitive Sass vars (in _variables.scss)  — compile-time only: typography,
+//      spacing, breakpoints, easing curves, raw brand colors.
+//   2. Semantic CSS custom properties (this file) — runtime theme tokens. Every
+//      component consumes these via var(--dv-*). Theme switches by flipping
+//      the `[data-theme="light"]` attribute on <html>.
+//
+// NAMING CONVENTION:
+//   --dv-bg-*       : background surfaces
+//   --dv-surface-*  : card-like elevated surfaces (may be translucent)
+//   --dv-text-*     : foreground text
+//   --dv-border-*   : borders and dividers
+//   --dv-accent*    : brand color + derivatives (soft, ring, hover)
+//   --dv-shadow-*   : elevation tiers
+//   --dv-gradient-* : brand gradients
+//
+// RULE: Components MUST consume semantic tokens, never primitives, for any
+// property that differs between themes (bg, color, border, shadow).
+// Primitives may be used for non-theme-sensitive values (gradient stops of
+// decorative glows, transparency over a dark overlay that stays dark in both
+// themes, etc.) but this should be rare and commented.
+// ============================================
+
+// ---------- DARK THEME (default) ----------
+:root {
+    // Backgrounds — base canvas of the app
+    --dv-bg-primary:          #000000;                   // Body, black-on-black sections
+    --dv-bg-secondary:        #0A0A0A;                   // Alt sections (bg-dark-section, services-overview, process)
+    --dv-bg-elevated:         #111111;                   // Cards sitting on primary bg (tech-item, service-mini-card)
+    --dv-bg-surface:          #1A1A1A;                   // Inputs, tags, inner chips
+    --dv-bg-inverse:          #FFFFFF;                   // Rare — text-on-dark token for filled brand buttons
+
+    // Surfaces — translucent / glass / elevated layers
+    --dv-surface-card:        rgba(17, 17, 17, 0.80);    // Glass cards (founder-card, contact-form, portfolio)
+    --dv-surface-card-hover:  rgba(17, 17, 17, 0.95);    // Card hover state backdrop
+
+    // Text
+    --dv-text-primary:        #FFFFFF;                   // Headings, brand, strong labels
+    --dv-text-secondary:      #CCCCCC;                   // Body copy, paragraphs
+    --dv-text-muted:          #999999;                   // Captions, meta, tags
+    --dv-text-inverse:        #000000;                   // Text over gradient brand fills (buttons)
+
+    // Borders
+    --dv-border-subtle:       #222222;                   // Idle borders, dividers, dashed lines
+    --dv-border-strong:       #333333;                   // Focus, scrollbar thumb, strong dividers
+
+    // Accent (brand)
+    --dv-accent:              #81F076;                   // Primary brand color (mint-glow)
+    --dv-accent-hover:        #55F6CB;                   // Hover / secondary brand (aquamarine)
+    --dv-accent-soft:         rgba(129, 240, 118, 0.08); // Tinted icon bg, subtle brand hovers
+    --dv-accent-border:       rgba(129, 240, 118, 0.22); // Icon box borders, badges
+    --dv-accent-strong:       rgba(129, 240, 118, 0.45); // Hover borders, focus outline alpha
+    --dv-accent-ring:         rgba(129, 240, 118, 0.12); // Focus rings, input focus shadow
+
+    // Shadows — layered for realism
+    --dv-shadow-sm:           0 2px 8px rgba(0, 0, 0, 0.30);
+    --dv-shadow-md:           0 1px 2px rgba(0, 0, 0, 0.30), 0 10px 28px rgba(0, 0, 0, 0.35);
+    --dv-shadow-lg:           0 2px 4px rgba(0, 0, 0, 0.35), 0 16px 40px rgba(0, 0, 0, 0.45);
+    --dv-shadow-glow:         0 0 25px rgba(129, 240, 118, 0.18);
+
+    // Gradients (theme-aware — light theme uses AA-safe darker stops)
+    --dv-gradient-brand:      linear-gradient(135deg, #81F076, #55F6CB);
+    --dv-gradient-card:       linear-gradient(145deg, #111111, #1A1A1A);
+
+    // Ambient / effects
+    --dv-overlay:             rgba(0, 0, 0, 0.55);       // Modal backdrops
+    --dv-navbar-bg:           rgba(0, 0, 0, 0.95);
+    --dv-navbar-bg-scrolled:  rgba(0, 0, 0, 0.98);
+    --dv-grid-line:           rgba(34, 34, 34, 0.30);    // Hero geometric grid
+    --dv-glow-opacity:        0.08;                      // Hero radial glow intensity
+    --dv-selection-bg:        rgba(129, 240, 118, 0.30);
+
+    // CTA banner (brand-tinted band)
+    --dv-cta-bg:              linear-gradient(135deg, rgba(129, 240, 118, 0.05), rgba(85, 246, 203, 0.05));
+    --dv-cta-border:          rgba(129, 240, 118, 0.10);
+
+    // Radii (exposed as vars for consumers outside SCSS; Sass vars still exist)
+    --dv-radius-sm:           4px;
+    --dv-radius-md:           8px;
+    --dv-radius-lg:           12px;
+    --dv-radius-xl:           16px;
+
+    // Back-compat aliases (legacy selectors in _utilities.scss already consume these)
+    --dv-border:              var(--dv-border-subtle);
+    --dv-card-backdrop:       var(--dv-surface-card);
+}
+
+
+// ---------- LIGHT THEME ----------
+// Opt-in via `<html data-theme="light">`. Accent shifted to a darker green
+// to maintain AA contrast (4.5:1) against white surfaces. Mint-glow stays
+// in gradients for brand continuity on filled buttons and decorative glows.
+[data-theme="light"] {
+    // Backgrounds
+    --dv-bg-primary:          #FFFFFF;
+    --dv-bg-secondary:        #F5F7F8;
+    --dv-bg-elevated:         #FFFFFF;
+    --dv-bg-surface:          #EDEFF2;
+    --dv-bg-inverse:          #0A0A0A;
+
+    // Surfaces
+    --dv-surface-card:        #FFFFFF;
+    --dv-surface-card-hover:  #F7F9FB;
+
+    // Text — AA-compliant on white
+    --dv-text-primary:        #0F1419;                   // ~16:1 on white
+    --dv-text-secondary:      #2E3742;                   // ~11:1 on white
+    --dv-text-muted:          #5A6370;                   // ~6:1 on white
+    --dv-text-inverse:        #FFFFFF;                   // For dark inverse surfaces
+
+    // Borders
+    --dv-border-subtle:       #E1E4E8;
+    --dv-border-strong:       #C1C7CE;
+
+    // Accent — darker brand green for AA on white (4.9:1 text, icons read)
+    --dv-accent:              #1A8F2E;
+    --dv-accent-hover:        #0E7524;
+    --dv-accent-soft:         rgba(26, 143, 46, 0.08);
+    --dv-accent-border:       rgba(26, 143, 46, 0.28);
+    --dv-accent-strong:       rgba(26, 143, 46, 0.55);
+    --dv-accent-ring:         rgba(26, 143, 46, 0.14);
+
+    // Shadows — softer, neutral-gray based (not black) for realism on white
+    --dv-shadow-sm:           0 1px 2px rgba(16, 24, 40, 0.06);
+    --dv-shadow-md:           0 1px 2px rgba(16, 24, 40, 0.06), 0 8px 24px rgba(16, 24, 40, 0.08);
+    --dv-shadow-lg:           0 2px 4px rgba(16, 24, 40, 0.08), 0 16px 40px rgba(16, 24, 40, 0.12);
+    --dv-shadow-glow:         0 0 25px rgba(26, 143, 46, 0.14);
+
+    // Gradients — brand gradient keeps vibrant mint for decorative glows,
+    // but we swap to darker stops for CTA buttons so the black text reads.
+    --dv-gradient-brand:      linear-gradient(135deg, #1A8F2E, #0E7524);
+    --dv-gradient-card:       linear-gradient(145deg, #FFFFFF, #F5F7F8);
+
+    // Ambient / effects
+    --dv-overlay:             rgba(15, 20, 25, 0.35);
+    --dv-navbar-bg:           rgba(255, 255, 255, 0.95);
+    --dv-navbar-bg-scrolled:  rgba(255, 255, 255, 0.98);
+    --dv-grid-line:           rgba(15, 20, 25, 0.06);
+    --dv-glow-opacity:        0.12;                      // Slightly stronger to keep visible on white
+    --dv-selection-bg:        rgba(26, 143, 46, 0.18);
+
+    // CTA banner (lighter tint on white)
+    --dv-cta-bg:              linear-gradient(135deg, rgba(26, 143, 46, 0.06), rgba(14, 117, 36, 0.06));
+    --dv-cta-border:          rgba(26, 143, 46, 0.14);
+}
+
+
+// ---------- THEME TRANSITION ----------
+// Apply ONCE on frequently themed surfaces, never `transition: all`. Kept
+// short so user interaction still feels instant. Respects reduced-motion.
+body,
+.dv-navbar,
+.dv-hero,
+.dv-footer,
+.dv-card, .dv-card--elevated, .dv-card--bordered,
+.service-card, .service-mini-card,
+.portfolio-card, .tech-item,
+.value-item, .trust-item,
+.founder-card, .contact-form, .form-control,
+.dv-cta-banner, .dv-icon-box,
+.case-study, .case-tag,
+.dv-support-card,
+.hero-badge,
+.step-number, .process-step .step-content {
+    transition:
+        background-color 240ms $ease-out,
+        color 240ms $ease-out,
+        border-color 240ms $ease-out,
+        box-shadow 240ms $ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body,
+    .dv-navbar, .dv-hero, .dv-footer,
+    .dv-card, .dv-card--elevated, .dv-card--bordered,
+    .service-card, .service-mini-card,
+    .portfolio-card, .tech-item,
+    .value-item, .trust-item,
+    .founder-card, .contact-form, .form-control,
+    .dv-cta-banner, .dv-icon-box,
+    .case-study, .case-tag,
+    .dv-support-card,
+    .hero-badge,
+    .step-number, .process-step .step-content {
+        transition: none;
+    }
+}

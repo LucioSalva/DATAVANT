@@ -1,0 +1,87 @@
+# ============================================
+# DATAVANT Systems - Apache Configuration (PRODUCTION / HTTPS)
+# ============================================
+# Enable after migrating to HTTPS. See SECURITY.md section 5 for the checklist.
+# To activate: cp .htaccess.production .htaccess && restart Apache.
+# Make sure APP_URL_SCHEME=https and APP_ENV=production in .env first.
+# ============================================
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+
+# --- Force HTTPS ---
+RewriteCond %{HTTPS} !=on
+RewriteCond %{HTTP:X-Forwarded-Proto} !=https
+RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+
+<IfModule mod_headers.c>
+    # --- Baseline security headers ---
+    Header always set X-Frame-Options "DENY"
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Permissions-Policy "geolocation=(), microphone=(), camera=(), payment=(), fullscreen=(self)"
+
+    # --- HSTS: ENABLED for HTTPS production ---
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+
+    # --- Content Security Policy (strict) ---
+    # Author markup is free of inline style="" (Fase 4 verified 2026-04-14).
+    # 'unsafe-inline' in style-src remains only for Bootstrap 3 collapse JS
+    # which sets style attributes at runtime. Plan Fase 5: move to nonce-based
+    # CSP or replace Bootstrap 3 collapse with a custom handler.
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests"
+</IfModule>
+
+# ----- Clean URLs -----
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.+)$ $1.php [L,QSA]
+
+</IfModule>
+
+# ----- Block sensitive files -----
+<FilesMatch "^\.">
+    Require all denied
+</FilesMatch>
+
+<FilesMatch "^(Dockerfile|docker-compose\.yml|docker-compose\.override\.yml|docker-entrypoint\.sh|SECURITY\.md|CONFIGURATION\.md|skills-lock\.json)$">
+    Require all denied
+</FilesMatch>
+
+<FilesMatch "\.scss$">
+    Require all denied
+</FilesMatch>
+
+<Files "*.inc">
+    Require all denied
+</Files>
+
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+RewriteRule ^includes/ - [F,L]
+RewriteRule ^vendor/ - [F,L]
+RewriteRule ^config/ - [F,L]
+RewriteRule ^logs/ - [F,L]
+</IfModule>
+
+ErrorDocument 404 /404.php
+AddDefaultCharset UTF-8
+
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/svg+xml "access plus 1 month"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType text/css "access plus 1 week"
+    ExpiresByType application/javascript "access plus 1 week"
+    ExpiresByType font/woff2 "access plus 1 month"
+</IfModule>
+
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/css
+    AddOutputFilterByType DEFLATE application/javascript application/json
+    AddOutputFilterByType DEFLATE image/svg+xml
+</IfModule>

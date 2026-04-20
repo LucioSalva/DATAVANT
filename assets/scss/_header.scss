@@ -1,0 +1,253 @@
+// ============================================
+// DATAVANT Systems - Header / Navigation
+// Consumes semantic tokens; no hardcoded colors.
+// ============================================
+
+.dv-navbar {
+  background-color: var(--dv-navbar-bg);
+  border: none;
+  border-bottom: 1px solid var(--dv-border-subtle);
+  border-radius: 0;
+  margin-bottom: 0;
+  padding: 12px 0;
+  transition:
+    background-color 240ms $ease-out,
+    padding 240ms $ease-out,
+    box-shadow 240ms $ease-out,
+    border-bottom-color 240ms $ease-out;
+  min-height: 70px;
+  z-index: 1000;
+
+  &.navbar-scrolled {
+    background-color: var(--dv-navbar-bg-scrolled);
+    padding: 8px 0;
+    box-shadow: var(--dv-shadow-sm);
+    border-bottom-color: var(--dv-cta-border);
+  }
+
+  .navbar-brand {
+    padding: 5px 15px;
+    height: auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    .brand-logo {
+      height: 36px;
+      width: auto;
+    }
+
+    .brand-text {
+      font-family: $font-primary;
+      font-weight: $font-weight-bold;
+      font-size: 20px;
+      color: var(--dv-text-primary);
+      letter-spacing: 1px;
+
+      span {
+        color: var(--dv-accent);
+        font-weight: $font-weight-light;
+      }
+    }
+  }
+
+  .navbar-toggle {
+    border-color: var(--dv-border-subtle);
+    margin-top: 15px;
+    margin-right: 15px;
+
+    .icon-bar {
+      background-color: var(--dv-accent);
+      height: 2px;
+      width: 22px;
+      transition: background-color $transition-fast;
+    }
+
+    &:hover, &:focus {
+      background-color: var(--dv-bg-surface);
+    }
+  }
+
+  .navbar-nav {
+    > li {
+      > a {
+        color: var(--dv-text-secondary);
+        font-size: 14px;
+        font-weight: $font-weight-medium;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        padding: 15px 18px;
+        transition: color $transition-fast, background-color $transition-fast;
+        position: relative;
+
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: 8px;
+          left: 18px;
+          right: 18px;
+          height: 2px;
+          background: var(--dv-gradient-brand);
+          transform: scaleX(0);
+          transform-origin: left center;
+          transition: transform 250ms $ease-out;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+          &:hover, &:focus {
+            color: var(--dv-text-primary);
+            background-color: transparent;
+
+            &::after {
+              transform: scaleX(1);
+            }
+          }
+        }
+      }
+
+      &.active > a {
+        color: var(--dv-accent);
+        background-color: transparent;
+
+        &::after {
+          transform: scaleX(1);
+        }
+
+        &:hover, &:focus {
+          color: var(--dv-accent);
+          background-color: transparent;
+        }
+      }
+    }
+  }
+
+  .navbar-collapse {
+    border-top-color: var(--dv-border-subtle);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 4px;
+
+    @include responsive(md) {
+      display: block; // Bootstrap 3 collapse behavior on mobile
+    }
+  }
+
+  // Theme toggle — sits OUTSIDE the nav <ul> for correct semantics
+  // but is visually aligned on the right, next to the CTA.
+  .dv-theme-toggle-wrapper {
+    display: flex;
+    align-items: center;
+    padding: 0 6px;
+
+    @include responsive(md) {
+      padding: 10px 15px 15px;
+      justify-content: flex-start;
+      border-top: 1px solid var(--dv-border-subtle);
+      margin-top: 6px;
+    }
+  }
+
+  .dv-theme-toggle {
+    background: transparent;
+    border: 1px solid var(--dv-border-subtle);
+    color: var(--dv-text-secondary);
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+    transition: border-color 200ms $ease-out, color 200ms $ease-out,
+                background-color 200ms $ease-out, transform $transition-press;
+    padding: 0;
+
+    .toggle-icon {
+      position: absolute;
+      font-size: 16px;
+      line-height: 1;
+      transition: opacity 200ms $ease-out, transform 200ms $ease-out;
+    }
+
+    .icon-light { opacity: 0; transform: scale(0.8) rotate(-20deg); }
+    .icon-dark  { opacity: 1; transform: scale(1) rotate(0); }
+
+    @media (hover: hover) and (pointer: fine) {
+      &:hover {
+        color: var(--dv-accent);
+        border-color: var(--dv-accent-strong);
+        background: var(--dv-accent-soft);
+      }
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+
+    // Pressed state — aria-pressed="true" means light theme is active.
+    // main.js keeps this in sync with the data-theme attribute.
+    &[aria-pressed="true"] {
+      border-color: var(--dv-accent-strong);
+      color: var(--dv-accent);
+      background: var(--dv-accent-soft);
+    }
+  }
+
+  .nav-cta {
+    > a {
+      background: var(--dv-gradient-brand);
+      // Bootstrap 3 nav-link base sets color from `.navbar-nav > li > a`;
+      // !important here overrides only that parent rule so the inverse text
+      // stays readable on the filled brand button.
+      color: var(--dv-text-inverse) !important;
+      border-radius: $border-radius;
+      padding: 10px 22px !important;
+      margin-top: 8px;
+      margin-left: 10px;
+      font-weight: $font-weight-bold;
+      font-size: 13px !important;
+
+      &::after {
+        display: none;
+      }
+
+      transition: transform $transition-press, opacity 200ms $ease-out, box-shadow 200ms $ease-out;
+
+      @media (hover: hover) and (pointer: fine) {
+        &:hover {
+          opacity: 0.92;
+          transform: translateY(-1px);
+          box-shadow: var(--dv-shadow-glow);
+        }
+      }
+
+      &:active {
+        transform: scale(0.97);
+      }
+    }
+  }
+}
+
+// Theme-driven icon swap on the toggle (placed outside the .dv-navbar
+// block so the `:root[data-theme]` selector resolves cleanly).
+:root[data-theme="light"] .dv-theme-toggle {
+  .icon-dark  { opacity: 0; transform: scale(0.8) rotate(20deg); }
+  .icon-light { opacity: 1; transform: scale(1) rotate(0); }
+}
+
+// Reduced motion — kill animation on theme toggle
+@media (prefers-reduced-motion: reduce) {
+  .dv-theme-toggle {
+    transition: none;
+
+    .toggle-icon {
+      transition: opacity 100ms ease;
+    }
+
+    &:active {
+      transform: none;
+    }
+  }
+}

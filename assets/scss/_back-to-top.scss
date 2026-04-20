@@ -1,0 +1,65 @@
+// ============================================
+// DATAVANT Systems — Back-to-top button
+// Behavior in assets/js/main.js. Styles live here.
+// Uses theme tokens so it adapts to light mode automatically.
+// ============================================
+
+.dv-back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--dv-gradient-brand);
+    color: var(--dv-text-inverse);
+    border: none;
+    font-size: 16px;
+    line-height: 44px;
+    text-align: center;
+    cursor: pointer;
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.9);
+    transition:
+        opacity 200ms $ease-out,
+        visibility 200ms $ease-out,
+        transform 160ms $ease-out,
+        box-shadow 200ms $ease-out;
+    box-shadow: var(--dv-shadow-glow);
+
+    &.visible {
+        opacity: 1;
+        visibility: visible;
+        transform: scale(1);
+    }
+
+    &:focus {
+        outline: 2px solid var(--dv-accent);
+        outline-offset: 3px;
+    }
+
+    &.visible:active {
+        transform: scale(0.95);
+        transition-duration: 100ms;
+    }
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .dv-back-to-top.visible:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--dv-shadow-lg), var(--dv-shadow-glow);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .dv-back-to-top {
+        transform: none;
+        transition: opacity 200ms ease, visibility 200ms ease;
+
+        &.visible {
+            transform: none;
+        }
+    }
+}

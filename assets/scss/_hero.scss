@@ -1,0 +1,175 @@
+// ============================================
+// DATAVANT Systems - Hero Section
+// ============================================
+
+.dv-hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  background-color: var(--dv-bg-primary);
+  overflow: hidden;
+  padding-top: 70px;
+
+  .hero-bg-grid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image:
+      linear-gradient(var(--dv-grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--dv-grid-line) 1px, transparent 1px);
+    background-size: 60px 60px;
+    opacity: 0.4;
+  }
+
+  .hero-glow {
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: var(--dv-glow-opacity);
+    pointer-events: none;
+
+    // Decorative brand glows — intentionally use raw brand primitives.
+    // In light theme opacity is bumped via --dv-glow-opacity so they
+    // remain visible against white.
+    &.glow-1 {
+      background: $mint-glow;
+      top: -100px;
+      right: -100px;
+    }
+
+    &.glow-2 {
+      background: $aquamarine;
+      bottom: -150px;
+      left: -100px;
+    }
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 40px 0;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    padding: 6px 18px;
+    border: 1px solid var(--dv-accent-border);
+    border-radius: 20px;
+    font-size: 13px;
+    color: var(--dv-accent);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: $font-weight-medium;
+    margin-bottom: 30px;
+    background: var(--dv-accent-soft);
+  }
+
+  .hero-title {
+    font-size: 56px;
+    font-weight: $font-weight-bold;
+    color: var(--dv-text-primary);
+    line-height: 1.15;
+    margin-bottom: 25px;
+
+    .title-highlight {
+      @include text-gradient;
+    }
+  }
+
+  .hero-subtitle {
+    font-size: 19px;
+    color: var(--dv-text-secondary);
+    font-weight: $font-weight-light;
+    line-height: 1.7;
+    max-width: 550px;
+    margin-bottom: 40px;
+  }
+
+  .hero-cta-group {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 60px;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 50px;
+    padding-top: 40px;
+    border-top: 1px solid var(--dv-border-subtle);
+
+    .stat-item {
+      .stat-number {
+        font-size: 32px;
+        font-weight: $font-weight-bold;
+        color: var(--dv-text-primary);
+        display: block;
+        line-height: 1;
+        margin-bottom: 5px;
+
+        .accent {
+          color: var(--dv-accent);
+        }
+      }
+
+      .stat-label {
+        font-size: 13px;
+        color: var(--dv-text-muted);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+    }
+  }
+
+  .hero-visual {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+
+    .hero-graphic {
+      width: 100%;
+      max-width: 500px;
+      opacity: 0.8;
+    }
+  }
+
+  // -----------------------------------------
+  // Lead variant (long-form headline hero)
+  // -----------------------------------------
+  .hero-content--lead {
+    padding: 60px 0 40px;
+  }
+
+  .hero-title--lead {
+    // Scale down for long-form copy; use clamp for fluid sizing.
+    font-size: clamp(30px, 4.2vw, 48px);
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    max-width: 920px;
+    margin-bottom: 28px;
+    font-weight: $font-weight-bold;
+  }
+
+  .hero-subtitle--lead {
+    max-width: 680px;
+    font-size: 18px;
+    line-height: 1.7;
+    margin-bottom: 36px;
+  }
+}
+
+// Reduced motion — disable animated glows on hero
+@media (prefers-reduced-motion: reduce) {
+  .dv-hero {
+    .hero-glow {
+      animation: none;
+    }
+  }
+}

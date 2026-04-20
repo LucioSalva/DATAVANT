@@ -1,0 +1,93 @@
+# ============================================
+# DATAVANT Systems - Apache Configuration (development / HTTP-safe)
+# ============================================
+# For production (HTTPS with HSTS) copy .htaccess.production over this file.
+# ============================================
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+
+<IfModule mod_headers.c>
+    # --- Baseline security headers ---
+    Header always set X-Frame-Options "DENY"
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Permissions-Policy "geolocation=(), microphone=(), camera=(), payment=(), fullscreen=(self)"
+
+    # --- Content Security Policy ---
+    # theme-init.js is external → no 'unsafe-inline' needed in script-src.
+    # style-src keeps 'unsafe-inline' because Bootstrap 3 collapse/dropdown JS
+    # injects inline style attributes at runtime (height/display transitions).
+    # Author markup is now inline-style-free (Fase 4 verified on
+    # 2026-04-14). Migrating away from Bootstrap 3's collapse or moving to
+    # nonce-based CSP is a Fase 5 concern.
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'"
+
+    # --- HSTS ---
+    # Intentionally commented out for dev. Swap to .htaccess.production for HTTPS.
+    # Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+</IfModule>
+
+# ----- Clean URLs: serve .php without extension -----
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.+)$ $1.php [L,QSA]
+
+</IfModule>
+
+# ----- Block access to sensitive files -----
+<FilesMatch "^\.">
+    Require all denied
+</FilesMatch>
+
+# Block access to Docker / build / docs / lock files
+<FilesMatch "^(Dockerfile|docker-compose\.yml|docker-compose\.override\.yml|docker-entrypoint\.sh|SECURITY\.md|CONFIGURATION\.md|skills-lock\.json)$">
+    Require all denied
+</FilesMatch>
+
+# Block access to SCSS source files
+<FilesMatch "\.scss$">
+    Require all denied
+</FilesMatch>
+
+# Block access to include files directly
+<Files "*.inc">
+    Require all denied
+</Files>
+
+# ----- Block directory listings -----
+Options -Indexes
+
+# ----- Protect sensitive directories -----
+<IfModule mod_rewrite.c>
+RewriteRule ^includes/ - [F,L]
+RewriteRule ^vendor/ - [F,L]
+RewriteRule ^config/ - [F,L]
+RewriteRule ^logs/ - [F,L]
+</IfModule>
+
+# ----- Custom error pages -----
+ErrorDocument 404 /404.php
+
+# ----- Default charset -----
+AddDefaultCharset UTF-8
+
+# ----- Cache static assets -----
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/svg+xml "access plus 1 month"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType text/css "access plus 1 week"
+    ExpiresByType application/javascript "access plus 1 week"
+    ExpiresByType font/woff2 "access plus 1 month"
+</IfModule>
+
+# ----- Compression -----
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/css
+    AddOutputFilterByType DEFLATE application/javascript application/json
+    AddOutputFilterByType DEFLATE image/svg+xml
+</IfModule>

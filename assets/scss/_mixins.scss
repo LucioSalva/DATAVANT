@@ -1,0 +1,97 @@
+// ============================================
+// DATAVANT Systems - Mixins
+// Mixins emit theme-aware output by referencing CSS tokens.
+// ============================================
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+// Glass card — translucent elevated surface. Uses semantic token so light
+// theme renders as a solid white card without losing the elevated feel.
+@mixin glass-card {
+  background: var(--dv-surface-card);
+  border: 1px solid var(--dv-border-subtle);
+  border-radius: $border-radius-lg;
+  backdrop-filter: blur(10px);
+}
+
+@mixin accent-border-left {
+  border-left: 3px solid var(--dv-accent);
+  padding-left: 20px;
+}
+
+@mixin text-gradient {
+  background: var(--dv-gradient-brand);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+// Brand glow hover — falls back to accent-strong token so light theme
+// still registers a subtle lift.
+@mixin glow-hover {
+  &:hover {
+    box-shadow: var(--dv-shadow-glow);
+  }
+}
+
+@mixin responsive($breakpoint) {
+  @if $breakpoint == xs {
+    @media (max-width: 480px) { @content; }
+  }
+  @if $breakpoint == sm {
+    @media (max-width: 767px) { @content; }
+  }
+  @if $breakpoint == md {
+    @media (max-width: 991px) { @content; }
+  }
+  @if $breakpoint == lg {
+    @media (max-width: 1199px) { @content; }
+  }
+}
+
+// Premium card — consolidated card hover pattern. Used by value-item,
+// service-mini-card, trust-item, case-study, tech-item. Emits theme-aware
+// layered shadows and hover lift gated behind pointer: fine.
+@mixin premium-card-hover {
+  transition:
+    transform $transition-card,
+    border-color $transition-card,
+    box-shadow $transition-card,
+    background-color $transition-card;
+
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      transform: translateY(-4px);
+      border-color: var(--dv-accent-strong);
+      box-shadow: var(--dv-shadow-lg), var(--dv-shadow-glow);
+      background-color: var(--dv-surface-card-hover);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition:
+      border-color 180ms ease,
+      box-shadow 180ms ease;
+
+    &:hover {
+      transform: none;
+    }
+  }
+}

@@ -1,0 +1,23 @@
+# DATAVANT Systems - robots.txt
+# Sitio profesional. Permite indexación de páginas públicas,
+# bloquea rutas sensibles y expone el sitemap.
+
+User-agent: *
+Allow: /
+
+Disallow: /includes/
+Disallow: /config/
+Disallow: /vendor/
+Disallow: /logs/
+Disallow: /send_mail.php
+Disallow: /.env
+Disallow: /.htaccess
+Disallow: /Dockerfile
+Disallow: /docker-compose.yml
+Disallow: /docker-entrypoint.sh
+Disallow: /SECURITY.md
+Disallow: /CONFIGURATION.md
+Disallow: /skills-lock.json
+Disallow: /.claude/
+
+Sitemap: https://datavant.systems/sitemap.xml

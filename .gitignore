@@ -1,0 +1,35 @@
+# ============================================
+# DATAVANT Systems - Git Ignore
+# ============================================
+
+# Environment / Secrets (NEVER commit real credentials)
+.env
+.env.*
+!.env.example
+
+# Log files + runtime data
+logs/*.log
+logs/rate_limit.json
+logs/events_*.log
+logs/contact_*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE / Editor
+.vscode
+.idea
+*.sublime-project
+*.sublime-workspace
+
+# Dependencies
+node_modules
+
+# Claude / AI tooling
+.claude
+
+# Compiled CSS is generated at build time but tracked by default for
+# environments that do not run sass. Uncomment to regenerate only from SCSS:
+# assets/css/main.css

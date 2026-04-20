@@ -1,0 +1,120 @@
+// ============================================
+// DATAVANT Systems - Button Styles
+// ============================================
+
+.btn-dv-primary {
+  display: inline-block;
+  padding: 14px 32px;
+  background: var(--dv-gradient-brand);
+  color: var(--dv-text-inverse);
+  font-family: $font-primary;
+  font-weight: $font-weight-bold;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  border: none;
+  border-radius: $border-radius;
+  cursor: pointer;
+  transition: transform $transition-press, box-shadow 200ms $ease-out, color 200ms $ease-out;
+  text-decoration: none;
+  text-align: center;
+
+  @media (hover: hover) and (pointer: fine) {
+    &:hover, &:focus {
+      color: var(--dv-text-inverse);
+      text-decoration: none;
+      transform: translateY(-2px);
+      box-shadow: var(--dv-shadow-glow);
+    }
+  }
+
+  &:active {
+    transform: scale(0.97);
+    transition-duration: 100ms;
+  }
+
+  &:disabled,
+  &[disabled] {
+    opacity: 0.75;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+}
+
+.btn-dv-outline {
+  display: inline-block;
+  padding: 14px 32px;
+  background: transparent;
+  color: var(--dv-text-primary);
+  font-family: $font-primary;
+  font-weight: $font-weight-medium;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  border: 1px solid var(--dv-border-strong);
+  border-radius: $border-radius;
+  cursor: pointer;
+  transition: transform $transition-press, color 200ms $ease-out, border-color 200ms $ease-out, background-color 200ms $ease-out;
+  text-decoration: none;
+  text-align: center;
+
+  @media (hover: hover) and (pointer: fine) {
+    &:hover, &:focus {
+      color: var(--dv-accent);
+      text-decoration: none;
+      border-color: var(--dv-accent);
+      background: var(--dv-accent-soft);
+    }
+  }
+
+  &:active {
+    transform: scale(0.97);
+    transition-duration: 100ms;
+  }
+}
+
+.btn-dv-ghost {
+  display: inline-block;
+  padding: 10px 20px;
+  background: transparent;
+  color: var(--dv-accent);
+  font-family: $font-primary;
+  font-weight: $font-weight-medium;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  border: none;
+  cursor: pointer;
+  transition: color 150ms $ease-out, transform $transition-press;
+  text-decoration: none;
+
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      color: var(--dv-text-primary);
+      text-decoration: none;
+    }
+
+    &:hover .arrow {
+      transform: translateX(4px);
+    }
+  }
+
+  &:active {
+    transform: scale(0.97);
+  }
+
+  .arrow {
+    display: inline-block;
+    margin-left: 6px;
+    transition: transform 200ms $ease-out;
+  }
+}
+
+.btn-dv-sm {
+  padding: 10px 22px;
+  font-size: 12px;
+}
+
+.btn-dv-lg {
+  padding: 16px 40px;
+  font-size: 15px;
+}

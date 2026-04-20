@@ -1,0 +1,78 @@
+// ============================================
+// DATAVANT Systems - Sass Primitives
+// Compile-time values only. Runtime theme tokens live in _tokens.scss.
+//
+// Use Sass vars here for:
+//   - Typography scale, font families, weights
+//   - Spacing, radii, easing curves, transitions
+//   - Raw brand color primitives (consumed by @include mixins and gradients)
+//   - Breakpoints (used by @include responsive())
+//
+// Do NOT use Sass vars for anything that must flip between light/dark.
+// Those are CSS custom properties — see _tokens.scss.
+// ============================================
+
+// ---------- Raw brand color primitives ----------
+// These feed gradients and the occasional rgba() helper. Components should
+// NOT consume these directly for bg/color — use var(--dv-*) instead.
+$black:          #000000;
+$white:          #FFFFFF;
+$mint-glow:      #81F076;
+$light-green:    #6BF3A1;
+$aquamarine:     #55F6CB;
+$grey:           #E0E0E0;
+
+// Extended neutrals — kept for mixin/gradient authoring only
+$dark-bg:        #0A0A0A;
+$dark-card:      #111111;
+$dark-surface:   #1A1A1A;
+$dark-border:    #222222;
+$text-muted:     #999999;
+$text-light:     #CCCCCC;
+
+// ---------- Typography ----------
+$font-primary:         'Ubuntu', sans-serif;
+$font-weight-light:    300;
+$font-weight-regular:  400;
+$font-weight-medium:   500;
+$font-weight-bold:     700;
+
+// ---------- Spacing ----------
+$section-padding:      100px 0;
+$section-padding-sm:   60px 0;
+
+// ---------- Radii ----------
+// NB: xl is the premium-card radius (value-item, service-mini-card, trust-item,
+// tech-item). Consumers MUST use the Sass var, not hardcoded px.
+$border-radius:        4px;
+$border-radius-lg:     8px;
+$border-radius-xl:     16px;
+$border-radius-2xl:    20px;
+
+// ---------- Easing curves ----------
+// Stronger than built-in CSS easings; pair with <300ms durations for
+// UI-grade motion (nothing springy, nothing bouncy).
+$ease-out:     cubic-bezier(0.23, 1, 0.32, 1);
+$ease-out-premium: cubic-bezier(0.22, 1, 0.36, 1); // For premium card hovers
+$ease-in-out:  cubic-bezier(0.77, 0, 0.175, 1);
+$ease-drawer:  cubic-bezier(0.32, 0.72, 0, 1);
+
+// ---------- Transitions ----------
+$transition-fast:    150ms $ease-out;
+$transition-base:    200ms $ease-out;
+$transition-slow:    300ms $ease-out;
+$transition-smooth:  250ms $ease-out;
+$transition-press:   160ms $ease-out;
+$transition-card:    240ms $ease-out-premium;
+
+// ---------- Legacy aliases (referenced by mixins / brand-only gradients) ----------
+$gradient-brand: linear-gradient(135deg, $mint-glow, $aquamarine);
+$gradient-dark:  linear-gradient(180deg, $black, $dark-bg);
+$gradient-card:  linear-gradient(145deg, $dark-card, $dark-surface);
+
+// Shadow Sass tokens — retained for mixins that still consume them directly.
+// Prefer `var(--dv-shadow-*)` in components for theme-awareness.
+$shadow-sm:   0 2px 8px rgba(0, 0, 0, 0.3);
+$shadow-md:   0 4px 20px rgba(0, 0, 0, 0.4);
+$shadow-lg:   0 8px 40px rgba(0, 0, 0, 0.5);
+$shadow-glow: 0 0 20px rgba($mint-glow, 0.15);

@@ -1,0 +1,776 @@
+// ============================================
+// DATAVANT Systems - Section Styles
+// All color/surface decisions go through semantic tokens.
+// Card patterns share a consistent premium system via @include premium-card-hover.
+// ============================================
+
+// --- Services Overview (Home) ---
+.dv-services-overview {
+  padding: $section-padding;
+  background-color: var(--dv-bg-secondary);
+  position: relative;
+
+  .service-mini-card {
+    position: relative;
+    text-align: center;
+    padding: 36px 26px;
+    background: var(--dv-bg-elevated);
+    border: 1px solid var(--dv-border-subtle);
+    border-radius: $border-radius-xl;
+    margin-bottom: 30px;
+    box-shadow: var(--dv-shadow-sm);
+    overflow: hidden;
+    @include premium-card-hover;
+
+    // Brand accent rail — subtle, unmistakably "product-grade".
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--dv-gradient-brand);
+      transform: scaleX(0);
+      transform-origin: left center;
+      transition: transform 320ms $ease-out-premium;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      &:hover::before {
+        transform: scaleX(1);
+      }
+    }
+
+    .service-icon {
+      width: 56px;
+      height: 56px;
+      margin: 0 auto 20px;
+      @include flex-center;
+      border: 1px solid var(--dv-accent-border);
+      border-radius: $border-radius-lg;
+      background: var(--dv-accent-soft);
+      color: var(--dv-accent);
+      font-size: 24px;
+      transition: background-color 200ms $ease-out, border-color 200ms $ease-out;
+
+      svg {
+        display: block;
+      }
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      &:hover .service-icon {
+        border-color: var(--dv-accent-strong);
+        background: var(--dv-accent-soft);
+      }
+    }
+
+    &:active {
+      transform: scale(0.99);
+    }
+
+    h4 {
+      font-size: 18px;
+      font-weight: $font-weight-bold;
+      color: var(--dv-text-primary);
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 14px;
+      color: var(--dv-text-muted);
+      margin-bottom: 0;
+      line-height: 1.6;
+    }
+  }
+}
+
+// --- Trust / Why Us ---
+.dv-trust {
+  padding: $section-padding;
+  background-color: var(--dv-bg-primary);
+
+  .trust-item {
+    position: relative;
+    padding: 30px 26px;
+    margin-bottom: 20px;
+    background: var(--dv-bg-elevated);
+    border: 1px solid var(--dv-border-subtle);
+    border-radius: $border-radius-xl;
+    box-shadow: var(--dv-shadow-sm);
+    @include premium-card-hover;
+
+    .trust-number {
+      font-size: 42px;
+      font-weight: $font-weight-bold;
+      @include text-gradient;
+      line-height: 1;
+      margin-bottom: 15px;
+    }
+
+    h4 {
+      font-size: 18px;
+      color: var(--dv-text-primary);
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 14px;
+      color: var(--dv-text-secondary);
+      margin: 0;
+      line-height: 1.6;
+    }
+  }
+}
+
+// --- About Section ---
+.dv-about {
+  padding: $section-padding;
+
+  .about-content {
+    @include accent-border-left;
+    margin-bottom: 40px;
+
+    p {
+      font-size: 16px;
+      line-height: 1.8;
+      color: var(--dv-text-secondary);
+    }
+  }
+
+  .founder-card {
+    @include glass-card;
+    padding: 40px;
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+    box-shadow: var(--dv-shadow-md);
+
+    .founder-avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: var(--dv-gradient-brand);
+      @include flex-center;
+      flex-shrink: 0;
+      font-size: 36px;
+      font-weight: $font-weight-bold;
+      color: var(--dv-text-inverse);
+      overflow: hidden;
+
+      svg {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .founder-info {
+      h3 {
+        font-size: 22px;
+        color: var(--dv-text-primary);
+        margin-bottom: 5px;
+      }
+
+      .founder-title {
+        color: var(--dv-accent);
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 15px;
+        display: block;
+      }
+
+      p {
+        font-size: 15px;
+        color: var(--dv-text-secondary);
+      }
+
+      .founder-links {
+        margin-top: 15px;
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+
+        a {
+          color: var(--dv-text-muted);
+          font-size: 14px;
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          padding: 6px 12px;
+          border: 1px solid var(--dv-border-subtle);
+          border-radius: $border-radius;
+          transition: color 180ms $ease-out, border-color 180ms $ease-out,
+                      background-color 180ms $ease-out;
+
+          svg {
+            display: block;
+          }
+
+          @media (hover: hover) and (pointer: fine) {
+            &:hover {
+              color: var(--dv-accent);
+              border-color: var(--dv-accent-strong);
+              background: var(--dv-accent-soft);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // --- Values Grid: premium cards for `Mis valores` on nosotros.php ---
+  //
+  // Design rules:
+  //   - Grid CSS nativo con auto-fit mientras el Bootstrap row se conserva
+  //     para compatibilidad con el markup existente. Cuando haya grid soporte,
+  //     `display: grid` se activa vía el wrapper `.values-grid-native`.
+  //   - Cards: radius 16px, layered shadow, generous padding, brand rail on
+  //     top-left via ::before.
+  //   - Icons: 52px tinted badge, AA-contrast accent.
+  //   - Hover: -4px lift behind (hover: hover) and (pointer: fine).
+  .values-grid {
+    margin-top: 60px;
+
+    // Use native CSS grid on the wrapper when supported. We layer over the
+    // existing Bootstrap .row for backward compat — if the PHP uses .row,
+    // Bootstrap's float grid still lays out columns; the value-item itself
+    // just takes whatever width its parent gives it. Adding `display: grid`
+    // here would conflict with .row floats, so we keep .row intact.
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px 0;
+
+      @include responsive(sm) {
+        gap: 20px 0;
+      }
+    }
+
+    .value-item {
+      position: relative;
+      height: 100%;
+      padding: 32px 28px;
+      background: var(--dv-bg-elevated);
+      border: 1px solid var(--dv-border-subtle);
+      border-radius: $border-radius-xl;
+      box-shadow: var(--dv-shadow-md);
+      margin-bottom: 0;
+      overflow: hidden;
+      @include premium-card-hover;
+
+      // Brand accent rail — premium product signal on top of the card.
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 64px;
+        height: 3px;
+        background: var(--dv-gradient-brand);
+        border-radius: 0 0 3px 0;
+        transition: width 320ms $ease-out-premium;
+      }
+
+      @media (hover: hover) and (pointer: fine) {
+        &:hover::before {
+          width: 100%;
+          border-radius: 0;
+        }
+      }
+
+      .value-icon {
+        width: 52px;
+        height: 52px;
+        @include flex-center;
+        color: var(--dv-accent);
+        background: var(--dv-accent-soft);
+        border: 1px solid var(--dv-accent-border);
+        border-radius: $border-radius-lg;
+        margin-bottom: 20px;
+        transition: background-color 200ms $ease-out, border-color 200ms $ease-out;
+
+        svg {
+          display: block;
+          width: 24px;
+          height: 24px;
+        }
+      }
+
+      @media (hover: hover) and (pointer: fine) {
+        &:hover .value-icon {
+          background: var(--dv-accent-soft);
+          border-color: var(--dv-accent-strong);
+        }
+      }
+
+      h4 {
+        font-size: 18px;
+        font-weight: $font-weight-bold;
+        line-height: 1.3;
+        color: var(--dv-text-primary);
+        margin-bottom: 10px;
+      }
+
+      p {
+        font-size: 15px;
+        line-height: 1.6;
+        color: var(--dv-text-secondary);
+        margin: 0;
+      }
+    }
+  }
+}
+
+// --- Services Detail ---
+.dv-services {
+  padding: $section-padding;
+
+  .service-card {
+    @include glass-card;
+    padding: 40px 30px;
+    margin-bottom: 30px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--dv-shadow-md);
+    @include premium-card-hover;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--dv-gradient-brand);
+      transform: scaleX(0);
+      transition: transform 320ms $ease-out-premium;
+      transform-origin: left center;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      &:hover::before {
+        transform: scaleX(1);
+      }
+    }
+
+    &:active {
+      transform: scale(0.995);
+    }
+
+    .service-card-icon {
+      width: 52px;
+      height: 52px;
+      @include flex-center;
+      background: var(--dv-accent-soft);
+      border: 1px solid var(--dv-accent-border);
+      border-radius: $border-radius-lg;
+      color: var(--dv-accent);
+      font-size: 22px;
+      margin-bottom: 24px;
+
+      svg {
+        display: block;
+      }
+    }
+
+    h3 {
+      font-size: 20px;
+      color: var(--dv-text-primary);
+      margin-bottom: 15px;
+    }
+
+    p {
+      font-size: 15px;
+      color: var(--dv-text-secondary);
+      margin-bottom: 20px;
+    }
+
+    .service-benefits {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      li {
+        position: relative;
+        padding-left: 20px;
+        margin-bottom: 8px;
+        font-size: 14px;
+        color: var(--dv-text-secondary);
+
+        &::before {
+          content: '—';
+          position: absolute;
+          left: 0;
+          color: var(--dv-accent);
+        }
+      }
+    }
+  }
+}
+
+// --- Process / Workflow ---
+.dv-process {
+  padding: $section-padding;
+  background: var(--dv-bg-secondary);
+
+  .process-timeline {
+    position: relative;
+    padding: 0;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--dv-border-subtle);
+      transform: translateX(-50%);
+    }
+  }
+
+  .process-step {
+    position: relative;
+    margin-bottom: 60px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    .step-number {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50px;
+      height: 50px;
+      @include flex-center;
+      background: var(--dv-bg-primary);
+      border: 2px solid var(--dv-accent);
+      border-radius: 50%;
+      color: var(--dv-accent);
+      font-weight: $font-weight-bold;
+      font-size: 18px;
+      z-index: 2;
+    }
+
+    .step-content {
+      width: 42%;
+      padding: 30px;
+      @include glass-card;
+
+      h3 {
+        font-size: 20px;
+        color: var(--dv-text-primary);
+        margin-bottom: 10px;
+      }
+
+      p {
+        font-size: 14px;
+        color: var(--dv-text-secondary);
+        margin: 0;
+      }
+    }
+
+    &:nth-child(odd) .step-content {
+      margin-left: 0;
+    }
+
+    &:nth-child(even) .step-content {
+      margin-left: 58%;
+    }
+  }
+}
+
+// --- Portfolio ---
+.dv-portfolio {
+  padding: $section-padding;
+  background-color: var(--dv-bg-primary);
+
+  .portfolio-card {
+    @include glass-card;
+    padding: 35px 30px;
+    margin-bottom: 30px;
+    height: 100%;
+    box-shadow: var(--dv-shadow-md);
+    @include premium-card-hover;
+
+    .portfolio-category {
+      font-size: 12px;
+      color: var(--dv-accent);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      font-weight: $font-weight-medium;
+      margin-bottom: 15px;
+    }
+
+    h3 {
+      font-size: 20px;
+      color: var(--dv-text-primary);
+      margin-bottom: 12px;
+    }
+
+    p {
+      font-size: 14px;
+      color: var(--dv-text-secondary);
+      margin-bottom: 20px;
+    }
+
+    .portfolio-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+
+      .tag {
+        display: inline-block;
+        padding: 4px 12px;
+        font-size: 12px;
+        color: var(--dv-text-secondary);
+        border: 1px solid var(--dv-border-subtle);
+        border-radius: 20px;
+        background: var(--dv-bg-surface);
+      }
+    }
+  }
+}
+
+// --- Technologies ---
+.dv-technologies {
+  padding: $section-padding;
+  background: var(--dv-bg-secondary);
+
+  .tech-category {
+    margin-bottom: 50px;
+
+    h3 {
+      font-size: 20px;
+      color: var(--dv-text-primary);
+      margin-bottom: 25px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--dv-border-subtle);
+    }
+  }
+
+  .tech-item {
+    text-align: center;
+    padding: 26px 16px;
+    background: var(--dv-bg-elevated);
+    border: 1px solid var(--dv-border-subtle);
+    border-radius: $border-radius-xl;
+    margin-bottom: 20px;
+    box-shadow: var(--dv-shadow-sm);
+    @include premium-card-hover;
+
+    // Now using 2-letter abbreviations instead of unicode/emoji — restyle
+    // the badge as a clean geometric chip.
+    .tech-icon {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto 14px;
+      @include flex-center;
+      font-family: $font-primary;
+      font-size: 14px;
+      font-weight: $font-weight-bold;
+      letter-spacing: 0.5px;
+      color: var(--dv-accent);
+      background: var(--dv-accent-soft);
+      border: 1px solid var(--dv-accent-border);
+      border-radius: $border-radius;
+      transition: background-color 200ms $ease-out, border-color 200ms $ease-out;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      &:hover .tech-icon {
+        background: var(--dv-accent-soft);
+        border-color: var(--dv-accent-strong);
+      }
+    }
+
+    .tech-name {
+      font-size: 14px;
+      font-weight: $font-weight-medium;
+      color: var(--dv-text-primary);
+      display: block;
+    }
+
+    .tech-desc {
+      font-size: 12px;
+      color: var(--dv-text-muted);
+      margin-top: 5px;
+    }
+  }
+}
+
+// --- Contact ---
+.dv-contact {
+  padding: $section-padding;
+
+  .contact-info {
+    padding-right: 30px;
+
+    .contact-item {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 30px;
+      align-items: flex-start;
+
+      .contact-icon {
+        width: 48px;
+        height: 48px;
+        @include flex-center;
+        background: var(--dv-accent-soft);
+        border: 1px solid var(--dv-accent-border);
+        border-radius: $border-radius-lg;
+        color: var(--dv-accent);
+        font-size: 18px;
+        flex-shrink: 0;
+
+        svg { display: block; }
+      }
+
+      .contact-detail {
+        h4 {
+          font-size: 16px;
+          color: var(--dv-text-primary);
+          margin-bottom: 3px;
+        }
+
+        p, a {
+          font-size: 14px;
+          color: var(--dv-text-secondary);
+          margin: 0;
+        }
+
+        a:hover {
+          color: var(--dv-accent);
+        }
+      }
+    }
+  }
+
+  .contact-form {
+    @include glass-card;
+    padding: 40px;
+    box-shadow: var(--dv-shadow-md);
+
+    // Fail-closed banner shown when mail_is_configured() === false.
+    // The banner stays visible and the form below keeps its structure
+    // (never hidden via CSS) but inputs are `disabled` server-side so
+    // no valid POST can reach send_mail.php from this page.
+    .dv-form-disabled-banner {
+      margin-bottom: 26px;
+      padding: 18px 20px;
+      background: var(--dv-accent-soft);
+      border: 1px solid var(--dv-accent-border);
+      border-left: 3px solid var(--dv-accent);
+      border-radius: $border-radius;
+      color: var(--dv-text-secondary);
+
+      strong {
+        display: block;
+        margin-bottom: 6px;
+        color: var(--dv-text-primary);
+        font-size: 15px;
+        letter-spacing: 0.2px;
+        text-transform: none;
+      }
+
+      p {
+        margin: 0;
+        font-size: 14px;
+        line-height: 1.55;
+      }
+
+      a {
+        color: var(--dv-accent);
+        font-weight: $font-weight-medium;
+        text-decoration: underline;
+        text-underline-offset: 2px;
+
+        &:hover {
+          color: var(--dv-accent-hover);
+        }
+      }
+    }
+
+    // Disabled inputs keep their shape but signal inert state clearly.
+    .form-control[disabled],
+    input[type="checkbox"][disabled] {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+
+    // Disabled submit button: preserve layout + contrast, drop the hover lift.
+    .btn-dv-primary[disabled] {
+      opacity: 0.55;
+      cursor: not-allowed;
+      pointer-events: none;
+      filter: grayscale(0.3);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      font-size: 13px;
+      font-weight: $font-weight-medium;
+      color: var(--dv-text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+
+    .form-control {
+      background-color: var(--dv-bg-surface);
+      border: 1px solid var(--dv-border-subtle);
+      border-radius: $border-radius;
+      color: var(--dv-text-primary);
+      padding: 12px 16px;
+      font-family: $font-primary;
+      font-size: 14px;
+      transition: border-color 180ms $ease-out, box-shadow 180ms $ease-out, background-color 180ms $ease-out;
+      box-shadow: none;
+      height: auto;
+
+      &:focus {
+        border-color: var(--dv-accent);
+        box-shadow: 0 0 0 3px var(--dv-accent-ring);
+        background-color: var(--dv-bg-surface);
+      }
+
+      &::placeholder {
+        color: var(--dv-text-muted);
+      }
+    }
+
+    textarea.form-control {
+      resize: vertical;
+      min-height: 120px;
+    }
+  }
+}
+
+// --- CTA Banner ---
+.dv-cta-banner {
+  padding: 80px 0;
+  background: var(--dv-cta-bg);
+  border-top: 1px solid var(--dv-cta-border);
+  border-bottom: 1px solid var(--dv-cta-border);
+  text-align: center;
+
+  h2 {
+    font-size: 32px;
+    color: var(--dv-text-primary);
+    margin-bottom: 15px;
+  }
+
+  p {
+    font-size: 17px;
+    color: var(--dv-text-secondary);
+    max-width: 500px;
+    margin: 0 auto 30px;
+  }
+}

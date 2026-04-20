@@ -1,0 +1,162 @@
+// ============================================
+// DATAVANT Systems - Footer
+// ============================================
+
+.dv-footer {
+  background-color: var(--dv-bg-secondary);
+  border-top: 1px solid var(--dv-border-subtle);
+  padding-top: 60px;
+
+  .footer-main {
+    padding-bottom: 40px;
+  }
+
+  .footer-brand {
+    margin-bottom: 20px;
+
+    .brand-text {
+      font-size: 22px;
+      font-weight: $font-weight-bold;
+      color: var(--dv-text-primary);
+      letter-spacing: 1px;
+
+      span {
+        color: var(--dv-accent);
+        font-weight: $font-weight-light;
+      }
+    }
+
+    p {
+      font-size: 14px;
+      color: var(--dv-text-muted);
+      margin-top: 12px;
+      max-width: 300px;
+      line-height: 1.6;
+    }
+  }
+
+  .footer-heading {
+    font-size: 14px;
+    font-weight: $font-weight-bold;
+    color: var(--dv-text-primary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+  }
+
+  .footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      margin-bottom: 10px;
+
+      a {
+        font-size: 14px;
+        color: var(--dv-text-secondary);
+        transition: color $transition-fast, padding-left $transition-fast;
+
+        &:hover {
+          color: var(--dv-accent);
+          padding-left: 5px;
+        }
+      }
+    }
+  }
+
+  .footer-contact-item {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 12px;
+    align-items: center;
+
+    .fc-icon {
+      color: var(--dv-accent);
+      font-size: 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+
+      svg { display: block; }
+    }
+
+    span, a {
+      font-size: 14px;
+      color: var(--dv-text-secondary);
+    }
+
+    a {
+      transition: color 180ms $ease-out;
+    }
+
+    a:hover {
+      color: var(--dv-accent);
+    }
+  }
+
+  .footer-bottom {
+    border-top: 1px solid var(--dv-border-subtle);
+    padding: 20px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .copyright {
+      font-size: 13px;
+      color: var(--dv-text-muted);
+      margin: 0;
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 12px;
+
+      a {
+        color: var(--dv-text-muted);
+        width: 34px;
+        height: 34px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid var(--dv-border-subtle);
+        border-radius: 50%;
+        transition: color 200ms $ease-out, border-color 200ms $ease-out,
+                    background-color 200ms $ease-out, transform $transition-press;
+
+        svg { display: block; }
+
+        @media (hover: hover) and (pointer: fine) {
+          &:hover {
+            color: var(--dv-accent);
+            border-color: var(--dv-accent-strong);
+            background: var(--dv-accent-soft);
+            transform: translateY(-1px);
+          }
+        }
+
+        &:active {
+          transform: scale(0.95);
+        }
+      }
+    }
+  }
+}
+
+// Reduced motion on footer social/contact hover
+@media (prefers-reduced-motion: reduce) {
+  .dv-footer .footer-social a {
+    transition: color 150ms ease, border-color 150ms ease;
+
+    &:hover {
+      transform: none;
+    }
+
+    &:active {
+      transform: none;
+    }
+  }
+}
