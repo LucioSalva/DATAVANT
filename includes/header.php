@@ -7,11 +7,25 @@
 <nav class="navbar navbar-fixed-top dv-navbar" role="navigation" aria-label="Navegación principal">
     <div class="container">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#dv-main-nav" aria-controls="dv-main-nav" aria-expanded="false" aria-label="Abrir menú de navegación">
-                <span class="sr-only">Menú</span>
-                <span class="icon-bar" aria-hidden="true"></span>
-                <span class="icon-bar" aria-hidden="true"></span>
-                <span class="icon-bar" aria-hidden="true"></span>
+            <!--
+              Custom hamburger toggle (replaces Bootstrap's data-toggle="collapse").
+              State is owned by main.js; no Bootstrap collapse plugin involved.
+              Aria state is kept in sync (aria-expanded) and the button controls
+              the #dv-main-nav drawer below.
+            -->
+            <button type="button" class="dv-nav-toggle" id="dv-nav-toggle" aria-controls="dv-main-nav" aria-expanded="false" aria-label="Abrir menú de navegación">
+                <!--
+                  All inner content is non-interactive (pointer-events: none) so
+                  `event.target` on a tap is always the <button> itself. Prevents
+                  the case where a finger lands on the .sr-only or the bars and
+                  the click target ends up being a child element.
+                -->
+                <span class="dv-nav-toggle__sr">Menú</span>
+                <span class="dv-nav-toggle__bars" aria-hidden="true">
+                    <span class="dv-nav-toggle__bar"></span>
+                    <span class="dv-nav-toggle__bar"></span>
+                    <span class="dv-nav-toggle__bar"></span>
+                </span>
             </button>
             <a class="navbar-brand" href="index.php" aria-label="DATAVANT Systems — Inicio">
                 <img src="assets/img/logo-icon.svg" alt="" class="brand-logo" aria-hidden="true">
@@ -19,7 +33,13 @@
             </a>
         </div>
 
-        <div class="collapse navbar-collapse" id="dv-main-nav">
+        <!--
+          Mobile drawer + desktop nav share this container.
+          - Desktop (>=992px): rendered inline by Bootstrap 3 navbar styles.
+          - Mobile  (<992px): styled as a fixed off-canvas panel; opened by
+            toggling `body.dv-nav-open`. No Bootstrap `collapse` JS is used.
+        -->
+        <div class="navbar-collapse dv-nav-panel" id="dv-main-nav">
             <ul class="nav navbar-nav navbar-right" role="menubar">
                 <li class="<?php echo ($current_page === 'inicio') ? 'active' : ''; ?>" role="none">
                     <a href="index.php" role="menuitem"<?php echo ($current_page === 'inicio') ? ' aria-current="page"' : ''; ?>>Inicio</a>
@@ -50,5 +70,8 @@
             </div>
         </div>
     </div>
+
+    <!-- Overlay for mobile drawer. Click closes the menu (handled in main.js). -->
+    <div class="dv-nav-overlay" id="dv-nav-overlay" hidden></div>
 </nav>
 <main id="main-content" tabindex="-1">

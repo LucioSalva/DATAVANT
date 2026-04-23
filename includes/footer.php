@@ -94,12 +94,26 @@
     </div>
 </footer>
 
+<?php
+// --- Footer asset cache-busting ---
+// Mirrors the helper in includes/head.php so footer scripts also get
+// `?v=<filemtime>` and never serve a stale build to the browser.
+$dv_footer_asset_root = __DIR__ . '/..';
+$dv_footer_asset_v = function (string $relative_path) use ($dv_footer_asset_root): string {
+    $full = $dv_footer_asset_root . '/' . ltrim($relative_path, '/');
+    $mtime = @filemtime($full);
+    return (string) ($mtime !== false ? $mtime : time());
+};
+$dv_v_jquery        = $dv_footer_asset_v('assets/js/jquery.min.js');
+$dv_v_bootstrap_js  = $dv_footer_asset_v('assets/js/bootstrap.min.js');
+$dv_v_main_js       = $dv_footer_asset_v('assets/js/main.js');
+?>
 <!-- jQuery + Bootstrap 3 JS (local) -->
-<script src="assets/js/jquery.min.js"></script>
-<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/jquery.min.js?v=<?php echo $dv_v_jquery; ?>"></script>
+<script src="assets/js/bootstrap.min.js?v=<?php echo $dv_v_bootstrap_js; ?>"></script>
 
 <!-- DATAVANT Custom JS -->
-<script src="assets/js/main.js"></script>
+<script src="assets/js/main.js?v=<?php echo $dv_v_main_js; ?>"></script>
 
 </body>
 </html>

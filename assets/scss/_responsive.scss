@@ -1,20 +1,152 @@
 // ============================================
 // DATAVANT Systems - Responsive Overrides
 // ============================================
+//
+// SCOPE POLICY:
+//   This file owns ALL mobile + tablet adjustments. Per-component partials
+//   define the desktop-first rules; nothing inside `@include responsive(*)`
+//   blocks lives outside this file (one exception: `_header.scss` owns the
+//   mobile drawer because it is structural to the navbar component).
+//
+// ROOT CAUSE OF "WASTED VERTICAL SPACE":
+//   Every component-level section (`.dv-services-overview`, `.dv-trust`,
+//   `.dv-about`, `.dv-services`, `.dv-portfolio`, `.dv-technologies`,
+//   `.dv-experience-sectors`, etc.) hardcodes `padding: $section-padding`
+//   which expands to `100px 0`. Only the generic `.section-padding`
+//   utility was being compacted on mobile. We now also compact the
+//   component-scoped sections under `md` and `sm`.
+//
+// BREAKPOINTS:
+//   xs         → ≤480px         (smallest phones)
+//   sm         → ≤767px         (phones up to large)
+//   md         → ≤991px         (tablets portrait + everything below)
+//   tablet-lg  → 992px–1024px   (iPad landscape; desktop-shaped but cramped)
+//   laptop     → 1025px–1599px  (1280/1366/1440/1536 laptops incl. MacBook 13/14
+//                                and Windows FHD @ 125% scaling. Compaction +
+//                                card equalization. Wide desktop ≥1600px keeps
+//                                the spacious 100px rhythm.)
+// ============================================
 
-// Tablet
+// =====================================================
+// TABLET (≤991px)
+// =====================================================
 @include responsive(md) {
+
+  // ---------- Header lateral breathing room (root fix) ----------
+  // Bootstrap 3 forces .container to width:750px at >=768px AND width:970px
+  // at >=992px. Inside the navbar that produced a "caged" look on iPad
+  // portrait/landscape and a "glued to edges" look on phones. We turn the
+  // navbar's inner wrapper fluid for ≤991px and drive the lateral inset
+  // with --dv-nav-edge (also consumed by .dv-nav-panel so the drawer rows
+  // align with the brand above them). Desktop ≥1025px is untouched.
+  .dv-navbar {
+    --dv-nav-edge: 28px; // tablet portrait default
+
+    > .container {
+      width: auto;       // override Bootstrap's 750px lock at ≥768px
+      max-width: 100%;
+      padding-inline: var(--dv-nav-edge);
+    }
+
+    .navbar-header {
+      // Bootstrap pulls navbar-header by -15px on each side; cancel that
+      // so our --dv-nav-edge is the true visual inset for brand + toggle.
+      margin-inline: 0;
+    }
+
+    .navbar-brand {
+      // Wrapper now owns lateral inset; brand only needs vertical breathing.
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    .dv-nav-toggle {
+      // Wrapper owns the right inset; remove the legacy 15px right margin.
+      margin-right: 0;
+    }
+  }
+
+  // ---------- Section vertical compaction (root fix) ----------
+  // Compact every section that hardcodes $section-padding so the
+  // mobile/tablet rhythm doesn't inherit desktop-first 100px stacks.
+  .section-padding,
+  .dv-services-overview,
+  .dv-trust,
+  .dv-about,
+  .dv-services,
+  .dv-process,
+  .dv-portfolio,
+  .dv-technologies,
+  .dv-contact,
+  .dv-experience-sectors,
+  .dv-testimonials,
+  .dv-cases-closing,
+  .dv-resources {
+    padding-top: 64px;
+    padding-bottom: 64px;
+  }
+
+  .dv-cases {
+    padding: 56px 0 40px;
+  }
+
+  // ---------- Section title rhythm ----------
+  .section-title {
+    margin-bottom: 36px;
+
+    h2 {
+      font-size: 30px;
+      margin-bottom: 12px;
+    }
+  }
+
+  // ---------- Hero (homepage + lead variant) ----------
   .dv-hero {
+    // Tablet portrait: don't reserve a viewport-tall hero — the visual is
+    // hidden anyway (`.hero-visual { display: none }` below).
+    min-height: auto;
+    padding-top: 96px;
+    padding-bottom: 56px;
+
+    .hero-content {
+      padding: 24px 0;
+    }
+
+    .hero-content--lead {
+      padding: 28px 0 24px;
+    }
+
+    .hero-badge {
+      margin-bottom: 18px;
+    }
+
     .hero-title {
       font-size: 40px;
+      margin-bottom: 18px;
+    }
+
+    .hero-title--lead {
+      font-size: clamp(26px, 4.6vw, 38px);
+      margin-bottom: 20px;
     }
 
     .hero-subtitle {
       font-size: 17px;
+      margin-bottom: 28px;
+    }
+
+    .hero-subtitle--lead {
+      font-size: 16px;
+      margin-bottom: 28px;
+    }
+
+    .hero-cta-group {
+      margin-bottom: 36px;
     }
 
     .hero-stats {
       gap: 30px;
+      padding-top: 28px;
 
       .stat-item .stat-number {
         font-size: 26px;
@@ -26,10 +158,7 @@
     }
   }
 
-  .section-title h2 {
-    font-size: 30px;
-  }
-
+  // ---------- Process timeline (pre-existing rule preserved) ----------
   .dv-process .process-timeline {
     &::before {
       left: 25px;
@@ -46,11 +175,12 @@
 
       .step-content {
         width: auto;
-        margin-left: 70px !important;
+        margin-left: 70px !important; // overrides Bootstrap col offset
       }
     }
   }
 
+  // ---------- Founder card (pre-existing rule preserved) ----------
   .dv-about .founder-card {
     flex-direction: column;
     text-align: center;
@@ -61,11 +191,56 @@
     }
   }
 
-  .dv-contact .contact-info {
-    padding-right: 0;
-    margin-bottom: 40px;
+  // ---------- About page rhythm ----------
+  .dv-about {
+    .about-content {
+      margin-bottom: 28px;
+    }
+
+    .values-grid {
+      margin-top: 40px;
+    }
   }
 
+  // ---------- Sobre mí page header ----------
+  // Brings the title closer to the navbar without overlapping it,
+  // and trims the dead space below the intro paragraph.
+  .dv-nosotros-hero {
+    padding-top: 110px;
+    padding-bottom: 36px;
+
+    p {
+      font-size: 16px;
+    }
+  }
+
+  // ---------- Page headers (Servicios / Proyectos / Recursos) ----------
+  // The `.dv-page-header--md` / `--lg` utilities push padding-top to 150/170px
+  // on top of `.section-padding`'s 100px → 250–270px of dead space at the
+  // top of these pages. Compact aggressively on mobile.
+  .dv-page-header--md { padding-top: 110px; }
+  .dv-page-header--lg { padding-top: 120px; }
+
+  // Specific compaction for the proyectos hero — the user reported it
+  // starts visibly too low.
+  .dv-cases-intro {
+    padding-top: 110px;
+    padding-bottom: 40px;
+
+    .section-title {
+      margin-bottom: 0;
+
+      h1 { font-size: 34px; }
+    }
+  }
+
+  // ---------- Contact (pre-existing rule preserved) ----------
+  .dv-contact .contact-info {
+    padding-right: 0;
+    margin-bottom: 36px;
+  }
+
+  // ---------- Footer (pre-existing rule preserved) ----------
   .dv-footer .footer-bottom {
     flex-direction: column;
     gap: 15px;
@@ -73,42 +248,78 @@
   }
 }
 
-// Mobile
+
+// =====================================================
+// PHONES (≤767px)
+// =====================================================
 @include responsive(sm) {
-  .section-padding {
-    padding: 60px 0;
+
+  // ---------- Section vertical compaction ----------
+  .section-padding,
+  .dv-services-overview,
+  .dv-trust,
+  .dv-about,
+  .dv-services,
+  .dv-process,
+  .dv-portfolio,
+  .dv-technologies,
+  .dv-contact,
+  .dv-experience-sectors,
+  .dv-testimonials,
+  .dv-cases-closing,
+  .dv-resources {
+    padding-top: 48px;
+    padding-bottom: 48px;
   }
 
+  // ---------- Hero ----------
   .dv-hero {
     min-height: auto;
-    padding: 120px 0 60px;
+    padding: 92px 0 44px;
 
-    .hero-title {
-      font-size: 32px;
+    .hero-content {
+      padding: 12px 0;
     }
 
-    .hero-title--lead {
-      font-size: 26px;
-      line-height: 1.25;
-    }
-
-    .hero-subtitle {
-      font-size: 16px;
-    }
-
-    .hero-subtitle--lead {
-      font-size: 15px;
-      line-height: 1.65;
+    .hero-content--lead {
+      padding: 16px 0 12px;
     }
 
     .hero-badge {
       font-size: 11px;
       letter-spacing: 0.5px;
+      margin-bottom: 14px;
+    }
+
+    .hero-title {
+      font-size: 32px;
+      line-height: 1.2;
+      margin-bottom: 14px;
+    }
+
+    .hero-title--lead {
+      font-size: clamp(24px, 6.8vw, 30px);
+      line-height: 1.22;
+      letter-spacing: -0.3px;
+      margin-bottom: 16px;
+    }
+
+    .hero-subtitle {
+      font-size: 16px;
+      line-height: 1.6;
+      margin-bottom: 22px;
+    }
+
+    .hero-subtitle--lead {
+      font-size: 15px;
+      line-height: 1.6;
+      margin-bottom: 22px;
     }
 
     .hero-cta-group {
       flex-direction: column;
       gap: 10px;
+      margin-bottom: 28px;
 
       .btn-dv-primary,
       .btn-dv-outline {
@@ -119,15 +330,18 @@
 
     .hero-stats {
       flex-direction: column;
-      gap: 20px;
+      gap: 18px;
+      padding-top: 22px;
     }
   }
 
+  // ---------- Section title rhythm ----------
   .section-title {
-    margin-bottom: 40px;
+    margin-bottom: 28px;
 
     h2 {
       font-size: 26px;
+      margin-bottom: 10px;
     }
 
     p {
@@ -135,52 +349,405 @@
     }
   }
 
-  h1 { font-size: 32px; }
-  h2 { font-size: 26px; }
+  // ---------- Global typography ----------
+  h1 { font-size: 30px; }
+  h2 { font-size: 24px; }
   h3 { font-size: 20px; }
 
+  // ---------- Navbar (compact brand at small widths) ----------
+  // Phones tighten lateral inset from 28px → 20px for a more "edge-aware"
+  // header without becoming glued. Lateral padding is owned by the
+  // .dv-navbar > .container override in the md block (cascades down).
   .dv-navbar {
-    .navbar-brand .brand-text {
-      font-size: 17px;
-    }
+    --dv-nav-edge: 20px;
 
-    .navbar-nav > li > a {
-      padding: 12px 15px;
-    }
+    .navbar-brand {
+      .brand-logo {
+        height: 30px;
+      }
 
-    .nav-cta > a {
-      margin-left: 15px;
-      margin-top: 5px;
-      margin-bottom: 10px;
-      display: inline-block;
+      .brand-text {
+        font-size: 16px;
+        letter-spacing: 0.5px;
+      }
     }
   }
 
+  // ---------- Cards & forms ----------
   .dv-services .service-card,
   .dv-portfolio .portfolio-card {
     padding: 25px 20px;
+    margin-bottom: 20px;
+  }
+
+  .dv-services-overview .service-mini-card {
+    padding: 28px 22px;
+    margin-bottom: 18px;
+  }
+
+  .dv-trust .trust-item {
+    padding: 24px 22px;
+  }
+
+  .dv-experience-sectors .dv-sector-card {
+    padding: 26px 22px;
+    margin-bottom: 18px;
+  }
+
+  .dv-about .values-grid .value-item {
+    padding: 26px 22px;
   }
 
   .dv-contact .contact-form {
     padding: 25px;
   }
 
+  // ---------- Sobre mí page header (small phones) ----------
+  .dv-nosotros-hero {
+    padding-top: 96px;
+    padding-bottom: 28px;
+
+    h1 {
+      margin-bottom: 14px;
+    }
+
+    p {
+      font-size: 15.5px;
+      line-height: 1.55;
+    }
+  }
+
+  // ---------- Page headers ----------
+  .dv-page-header--md { padding-top: 96px; }
+  .dv-page-header--lg { padding-top: 104px; }
+
+  .dv-cases-intro {
+    padding-top: 96px;
+    padding-bottom: 28px;
+
+    .section-title h1 { font-size: 28px; }
+  }
+
+  // ---------- About content ----------
+  .dv-about {
+    .about-content {
+      margin-bottom: 22px;
+
+      p {
+        font-size: 15px;
+        line-height: 1.7;
+      }
+    }
+
+    .founder-card {
+      padding: 28px 22px;
+      gap: 18px;
+    }
+
+    .values-grid {
+      margin-top: 28px;
+    }
+  }
+
+  // ---------- Resources index card ----------
+  .dv-resources .dv-resource-card {
+    padding: 24px 22px 20px;
+    margin-bottom: 20px;
+  }
+
+  // ---------- CTA banner ----------
   .dv-cta-banner {
-    padding: 50px 0;
+    padding: 48px 0;
 
     h2 { font-size: 24px; }
-    p { font-size: 15px; }
+    p  { font-size: 15px; }
   }
 }
 
-// Extra small
+
+// =====================================================
+// EXTRA SMALL PHONES (≤480px)
+// =====================================================
 @include responsive(xs) {
-  .dv-hero .hero-title {
-    font-size: 28px;
-  }
 
   .container {
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  // ---------- Hero ----------
+  .dv-hero {
+    padding: 88px 0 36px;
+
+    .hero-title {
+      font-size: 28px;
+    }
+
+    .hero-title--lead {
+      font-size: clamp(22px, 7.4vw, 28px);
+    }
+
+    .hero-subtitle--lead {
+      font-size: 14.5px;
+    }
+
+    .hero-cta-group {
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+  }
+
+  // ---------- Section title (extra tight on smallest phones) ----------
+  .section-title {
+    margin-bottom: 24px;
+
+    h2 { font-size: 22px; }
+  }
+
+  // ---------- Page headers (smallest phones) ----------
+  .dv-nosotros-hero {
+    padding-top: 92px;
+    padding-bottom: 24px;
+  }
+
+  .dv-page-header--md { padding-top: 92px; }
+  .dv-page-header--lg { padding-top: 96px; }
+
+  .dv-cases-intro {
+    padding-top: 92px;
+
+    .section-title h1 { font-size: 24px; }
+  }
+
+  // ---------- Sections (extra compact) ----------
+  .section-padding,
+  .dv-services-overview,
+  .dv-trust,
+  .dv-about,
+  .dv-services,
+  .dv-process,
+  .dv-portfolio,
+  .dv-technologies,
+  .dv-contact,
+  .dv-experience-sectors,
+  .dv-testimonials,
+  .dv-cases-closing,
+  .dv-resources {
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+
+  // ---------- Navbar squeeze ----------
+  // Smallest phones: 16px lateral inset. Slightly smaller toggle to keep
+  // tap target generous without crowding the brand.
+  .dv-navbar {
+    --dv-nav-edge: 16px;
+
+    .navbar-brand {
+      .brand-logo { height: 28px; }
+      .brand-text {
+        font-size: 15px;
+        letter-spacing: 0.4px;
+      }
+    }
+
+    .dv-nav-toggle {
+      width: 42px;
+      height: 42px;
+    }
+  }
+}
+
+
+// =====================================================
+// TABLET LANDSCAPE (992–1024px)
+// Desktop-shaped layout but a noticeably tighter container.
+// We only adjust horizontal compression of the navbar so the 6-link nav
+// + brand + theme toggle fit cleanly. Hero/sections/cards stay desktop.
+// =====================================================
+@include responsive(tablet-lg) {
+
+  // iPad landscape (1024px) was caged inside Bootstrap's .container width:970px.
+  // Make the navbar wrapper fluid in this window only and use a 36px lateral
+  // inset for premium "edge-with-air" feel without touching desktop ≥1025px.
+  .dv-navbar {
+    --dv-nav-edge: 36px;
+
+    > .container {
+      width: auto;
+      max-width: 100%;
+      padding-inline: var(--dv-nav-edge);
+    }
+
+    .navbar-header {
+      margin-inline: 0;
+    }
+
+    .navbar-brand {
+      // Wrapper owns lateral inset; brand keeps only its compact typography.
+      padding-left: 0;
+      padding-right: 0;
+
+      .brand-text {
+        font-size: 18px;
+        letter-spacing: 0.6px;
+      }
+    }
+
+    .navbar-nav > li > a {
+      padding: 15px 12px;
+      font-size: 13px;
+      letter-spacing: 0.4px;
+
+      &::after {
+        left: 12px;
+        right: 12px;
+      }
+    }
+
+    .nav-cta > a {
+      padding: 10px 16px !important;
+      margin-left: 6px;
+    }
+
+    .dv-theme-toggle-wrapper {
+      padding: 0 4px;
+    }
+  }
+
+  // Page headers (Servicios uses --lg) feel a bit excessive on iPad
+  // landscape; trim them slightly without changing the desktop look.
+  .dv-page-header--md { padding-top: 130px; }
+  .dv-page-header--lg { padding-top: 144px; }
+
+  .dv-nosotros-hero {
+    padding-top: 130px;
+  }
+}
+
+
+// =====================================================
+// DESKTOP (≥1025px) — applies to laptops AND wide monitors
+// Compacts vertical rhythm on Proyectos/Servicios AND equalizes Bootstrap 3
+// floated cards (which never auto-match height) so siblings in the same row
+// stretch to the same height. Bootstrap 3 floats break at every desktop width
+// the same way (one tall card pushes its right-side sibling down and leaves
+// a huge gap before the next row), so this fix must be universal across all
+// desktop widths — 1280, 1366, 1440, 1536, 1600, 1920+. Mobile/tablet keep
+// their existing scoped rules.
+// =====================================================
+@media (min-width: 1025px) {
+
+  // ---------- Page headers compaction ----------
+  // Proyectos uses .dv-page-header--md (150px top by default).
+  // Servicios uses .dv-page-header--lg (170px top by default).
+  // Both felt too tall on 1366×768.
+  .dv-page-header--md { padding-top: 132px; }
+  .dv-page-header--lg { padding-top: 140px; }
+
+  // ---------- Section vertical compaction ----------
+  // Targets ONLY the component-level sections actually used by proyectos.php
+  // and servicios.php. Other pages (home, nosotros, contacto, etc.) retain
+  // their desktop 100px rhythm so their existing look is unchanged.
+  .dv-experience-sectors {
+    padding-top: 36px;
+    padding-bottom: 72px;
+  }
+
+  // Homepage: pull "Lo que ofrezco" and "Por qué DATAVANT Systems" closer
+  // to the section above without losing bottom breathing room.
+  .dv-services-overview,
+  .dv-trust {
+    padding-top: 40px;
+    padding-bottom: 72px;
+  }
+
+  .dv-testimonials,
+  .dv-cases-closing,
+  .dv-services {
+    padding-top: 72px;
+    padding-bottom: 72px;
+  }
+
+  // .dv-cases owns its own padding (80px 0 60px on desktop).
+  .dv-cases {
+    padding: 64px 0 48px;
+
+    .container {
+      gap: 32px;
+    }
+  }
+
+  // Proyectos hero: .dv-cases-intro uses `.section-padding` + `.dv-page-header--md`.
+  // The .dv-page-header--md rule above trims padding-top; tighten the bottom too
+  // so the distance to `Experiencia por sector` is closer to a single rhythm unit.
+  .dv-cases-intro {
+    padding-bottom: 32px;
+  }
+
+  // ---------- Section title rhythm ----------
+  // With shorter section padding, the section-title bottom margin also needs
+  // a small trim so the heading doesn't float in the middle of the block.
+  .dv-experience-sectors .section-title,
+  .dv-testimonials .section-title,
+  .dv-services .section-title {
+    margin-bottom: 44px;
+  }
+
+  // ---------- Card equalization (Bootstrap 3 floats → flex row) ----------
+  // Bootstrap 3 columns are floated, so sibling cards do not auto-equalize
+  // height. We turn ONLY the rows inside these two sections into flex rows,
+  // preserve Bootstrap's -15px gutters, and let the direct columns stretch.
+  // The inner card already uses `height: 100%` (sector card) / gets it here
+  // (service card), so each card fills its column cleanly.
+  .dv-experience-sectors,
+  .dv-services {
+    > .container > .row {
+      display: flex;
+      flex-wrap: wrap;
+      // Keep Bootstrap's -15px row gutters intact so cols line up with
+      // the container padding — flex does not clobber margins, but we
+      // re-state them so intent is explicit.
+      margin-left: -15px;
+      margin-right: -15px;
+
+      // Direct column children stretch to the tallest sibling in their
+      // wrap line. The inner card then fills the column via height: 100%.
+      > [class*="col-"] {
+        display: flex;
+        flex-direction: column;
+      }
+    }
+  }
+
+  // Service cards do not currently declare `height: 100%`; add it under
+  // the laptop scope only so the equalization above takes visual effect.
+  // The card already has `display: block` by default — no structural change
+  // to child layout is needed; the box just stretches to fill its column.
+  .dv-services .service-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    // With flex + column, benefits list pushes to the bottom naturally when
+    // siblings have shorter copy.
+    margin-bottom: 0;
+
+    .service-benefits {
+      margin-top: auto;
+    }
+  }
+
+  // Sector cards already have `height: 100%`; reset the bottom margin
+  // since row-level spacing is now handled by the flex row wrap.
+  .dv-experience-sectors .dv-sector-card {
+    margin-bottom: 0;
+  }
+
+  // Restore vertical separation between wrapped rows on laptop (e.g. the
+  // 5th service card on .col-md-offset-3 sits on its own row). We need a
+  // gap equivalent to the old margin-bottom: 30px that we cleared above.
+  .dv-services > .container > .row,
+  .dv-experience-sectors > .container > .row {
+    row-gap: 30px;
   }
 }

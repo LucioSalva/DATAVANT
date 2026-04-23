@@ -61,6 +61,23 @@
   @if $breakpoint == md {
     @media (max-width: 991px) { @content; }
   }
+  // Tablet landscape window between the mobile drawer (<=991px) and full
+  // desktop. Used ONLY to fine-tune the desktop navbar + page-header padding
+  // so iPad landscape (1024px) doesn't look like a compressed desktop.
+  // Never used for hero/sections/cards (those keep md/sm/xs scopes).
+  @if $breakpoint == tablet-lg {
+    @media (min-width: 992px) and (max-width: 1024px) { @content; }
+  }
+  // Laptop window between tablet-lg (≤1024px) and wide desktop (≥1600px).
+  // Targets the full modern laptop range:
+  //   1280×800, 1366×768, 1440×900 (MacBook 13/14), 1536×864 (Windows FHD @ 125%),
+  //   1600×900 borderline. Wide desktop (≥1600px native FHD/QHD/4K monitors)
+  //   keeps the original generous rhythm.
+  // Previous upper bound (1439) excluded MacBook 1440 and Windows 1536, which is
+  // why the laptop compaction did not visibly apply on the user's actual machine.
+  @if $breakpoint == laptop {
+    @media (min-width: 1025px) and (max-width: 1599px) { @content; }
+  }
   @if $breakpoint == lg {
     @media (max-width: 1199px) { @content; }
   }

@@ -67,14 +67,130 @@ $(document).ready(function () {
 
 
     /* -----------------------------------------
-       4. Mobile nav close on link click
+       4. Mobile drawer (custom hamburger)
+       Single source of truth: `body.dv-nav-open` + `aria-expanded` on the
+       toggle button. No Bootstrap collapse plugin involved. Includes:
+         - open / close / toggle
+         - ESC closes
+         - tap on overlay closes
+         - tap on any nav link closes
+         - viewport >= 992px (desktop) auto-closes
+         - body scroll lock with scrollbar-width compensation (no layout jump)
+         - focus management: first link on open, return to toggle on close
        ----------------------------------------- */
-    $('#dv-main-nav').on('click', 'li a', function () {
-        var $collapse = $('#dv-main-nav');
-        if ($collapse.hasClass('in')) {
-            $collapse.collapse('hide');
+    (function initMobileDrawer() {
+        var toggleEl  = document.getElementById('dv-nav-toggle');
+        var panelEl   = document.getElementById('dv-main-nav');
+        var overlayEl = document.getElementById('dv-nav-overlay');
+        if (!toggleEl || !panelEl || !overlayEl) { return; }
+
+        var DESKTOP_MIN = 992; // matches @include responsive(md) breakpoint
+        var bodyEl = document.body;
+        var htmlEl = document.documentElement;
+        var isOpen = false;
+        var lastFocus = null;
+
+        function setScrollbarComp() {
+            // Width of the vertical scrollbar (0 on overlay-scrollbar OSes).
+            var w = window.innerWidth - htmlEl.clientWidth;
+            htmlEl.style.setProperty('--dv-scrollbar-comp', (w > 0 ? w : 0) + 'px');
         }
-    });
+
+        function focusFirstLink() {
+            var first = panelEl.querySelector('a, button');
+            if (first && typeof first.focus === 'function') {
+                // Defer to next frame so the panel is paintable/visible.
+                window.requestAnimationFrame(function () { first.focus(); });
+            }
+        }
+
+        function openDrawer() {
+            if (isOpen) { return; }
+            lastFocus = document.activeElement;
+            setScrollbarComp();
+            bodyEl.classList.add('dv-nav-open');
+            toggleEl.setAttribute('aria-expanded', 'true');
+            toggleEl.setAttribute('aria-label', 'Cerrar menú de navegación');
+            overlayEl.hidden = false;
+            isOpen = true;
+            focusFirstLink();
+        }
+
+        function closeDrawer(opts) {
+            if (!isOpen) { return; }
+            bodyEl.classList.remove('dv-nav-open');
+            toggleEl.setAttribute('aria-expanded', 'false');
+            toggleEl.setAttribute('aria-label', 'Abrir menú de navegación');
+            isOpen = false;
+            // Hide overlay AFTER its transition completes so the fade-out plays.
+            window.setTimeout(function () {
+                if (!bodyEl.classList.contains('dv-nav-open')) {
+                    overlayEl.hidden = true;
+                }
+            }, 320);
+            // Return focus to the toggle unless the close was caused by the
+            // user clicking a nav link (which navigates away anyway).
+            if (!opts || opts.restoreFocus !== false) {
+                toggleEl.focus();
+            }
+        }
+
+        function toggleDrawer() {
+            if (isOpen) { closeDrawer(); } else { openDrawer(); }
+        }
+
+        // Toggle button. Stop propagation so the document-level smooth-scroll
+        // delegate (a[href^="#"]) and any other late-bound document listener
+        // cannot react to this click; preventDefault avoids form/submit
+        // edge cases when the navbar is rendered inside a <form>.
+        toggleEl.addEventListener('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            toggleDrawer();
+        });
+
+        // Overlay tap closes.
+        overlayEl.addEventListener('click', function () { closeDrawer(); });
+
+        // Click on any link inside the drawer closes (mobile only — on
+        // desktop the drawer is never `open`, so this is a no-op there).
+        panelEl.addEventListener('click', function (e) {
+            var t = e.target;
+            // Walk up to find an <a>, in case the click landed on inner span.
+            while (t && t !== panelEl && t.tagName !== 'A') { t = t.parentNode; }
+            if (t && t.tagName === 'A' && isOpen) {
+                closeDrawer({ restoreFocus: false });
+            }
+        });
+
+        // ESC closes.
+        document.addEventListener('keydown', function (e) {
+            if ((e.key === 'Escape' || e.key === 'Esc') && isOpen) {
+                e.preventDefault();
+                closeDrawer();
+            }
+        });
+
+        // Auto-close when crossing into desktop. Debounced via rAF. Resets
+        // scrollbar comp so the desktop layout has no stray padding-right.
+        var rafId = 0;
+        window.addEventListener('resize', function () {
+            if (rafId) { return; }
+            rafId = window.requestAnimationFrame(function () {
+                rafId = 0;
+                if (window.innerWidth >= DESKTOP_MIN && isOpen) {
+                    // Desktop reached: close silently, no focus restore needed
+                    // because the toggle is hidden at this width.
+                    bodyEl.classList.remove('dv-nav-open');
+                    toggleEl.setAttribute('aria-expanded', 'false');
+                    toggleEl.setAttribute('aria-label', 'Abrir menú de navegación');
+                    overlayEl.hidden = true;
+                    htmlEl.style.removeProperty('--dv-scrollbar-comp');
+                    isOpen = false;
+                }
+            });
+        });
+    })();
 
 
     /* -----------------------------------------
@@ -311,10 +427,15 @@ $(document).ready(function () {
 
     /* -----------------------------------------
        6. Theme toggle (light/dark)
-       Extended to sync:
-         - aria-pressed on the toggle button (a11y state reflection)
-         - <meta name="theme-color"> so mobile browser chrome follows theme
-       No other logic changes from the original toggle implementation.
+       Brand policy: dark mode is the default. We honor ONLY a previously
+       persisted 'light' choice. We do NOT follow prefers-color-scheme — the
+       brand identity stays dark-first regardless of OS.
+
+       Responsibilities:
+         - keep <html data-theme> in sync with the user's explicit choice
+         - persist that choice to localStorage
+         - sync aria-pressed on the toggle button (a11y state reflection)
+         - sync <meta name="theme-color"> so mobile browser chrome follows
        ----------------------------------------- */
     var $themeSwitch = $('#dv-theme-switch');
     var $htmlEl = $('html');
@@ -323,12 +444,10 @@ $(document).ready(function () {
     var THEME_COLOR_LIGHT = '#FFFFFF';
 
     function getPreferredTheme() {
-        var stored = localStorage.getItem('dv-theme');
-        if (stored) return stored;
-        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
-            return 'light';
-        }
-        return 'dark';
+        // Only a persisted 'light' choice is honored. Anything else is dark.
+        var stored = null;
+        try { stored = localStorage.getItem('dv-theme'); } catch (e) { /* storage disabled */ }
+        return (stored === 'light') ? 'light' : 'dark';
     }
 
     function syncThemeIndicators(theme) {
@@ -350,27 +469,19 @@ $(document).ready(function () {
         } else {
             $htmlEl.removeAttr('data-theme');
         }
-        localStorage.setItem('dv-theme', theme);
+        try { localStorage.setItem('dv-theme', theme); } catch (e) { /* storage disabled — runtime still works */ }
         syncThemeIndicators(theme);
     }
 
-    applyTheme(getPreferredTheme());
+    // Sync indicators on first load. theme-init.js already painted the
+    // correct data-theme synchronously before paint to prevent FOUC; here
+    // we just make the toggle aria-pressed and meta theme-color match.
+    syncThemeIndicators(getPreferredTheme());
 
     $themeSwitch.on('click', function () {
         var current = $htmlEl.attr('data-theme') === 'light' ? 'dark' : 'light';
         applyTheme(current);
     });
-
-    if (window.matchMedia) {
-        var mq = window.matchMedia('(prefers-color-scheme: light)');
-        if (typeof mq.addEventListener === 'function') {
-            mq.addEventListener('change', function (e) {
-                if (!localStorage.getItem('dv-theme')) {
-                    applyTheme(e.matches ? 'light' : 'dark');
-                }
-            });
-        }
-    }
 
 
     /* -----------------------------------------

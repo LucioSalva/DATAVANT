@@ -233,6 +233,22 @@
     background: var(--dv-bg-surface);
     border: 1px dashed var(--dv-border-strong);
   }
+
+  // Internal / own platform — real project owned and operated by DATAVANT.
+  // Uses the secondary brand (aquamarine) family via existing CTA tokens
+  // so it stays in-system but is visually distinct from --gov (mint green)
+  // and --template (muted neutral).
+  &--internal {
+    color: var(--dv-accent-hover);
+    background: var(--dv-cta-bg);
+    border: 1px solid var(--dv-cta-border);
+
+    @media (hover: hover) and (pointer: fine) {
+      &:hover {
+        border-color: var(--dv-accent-hover);
+      }
+    }
+  }
 }
 
 // ---------- Status row ----------
@@ -303,11 +319,10 @@
 }
 
 // ---------- Responsive ----------
+// NB: Section paddings and `.dv-cases-intro h1` font-size live in
+// `_responsive.scss` (single source of truth for cross-cutting mobile/tablet
+// rules). Here we only keep card-internal layout/typography overrides.
 @include responsive(md) {
-  .dv-cases-intro .section-title h1 {
-    font-size: 34px;
-  }
-
   .case-study {
     padding: 32px 28px;
 
@@ -327,16 +342,8 @@
 }
 
 @include responsive(sm) {
-  .dv-cases {
-    padding: 60px 0 40px;
-
-    .container {
-      gap: 28px;
-    }
-  }
-
-  .dv-cases-intro .section-title h1 {
-    font-size: 26px;
+  .dv-cases .container {
+    gap: 28px;
   }
 
   .case-study {

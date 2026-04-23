@@ -180,13 +180,84 @@ include 'includes/header.php';
             </div>
         </article>
 
-        <!-- ================== CASE 3 (REPRESENTATIVE TEMPLATE) ================== -->
-        <article class="case-study case-study--template dv-animate dv-animate-delay-2" aria-labelledby="case-3-title">
+        <!-- ================== CASE 3 (REAL · TaskOrbit, plataforma propia) ================== -->
+        <article class="case-study dv-animate dv-animate-delay-2" aria-labelledby="case-3-title">
             <header class="case-study__header">
                 <div class="case-study__index" aria-hidden="true">03</div>
                 <div class="case-study__heading">
+                    <span class="case-study__client">Plataforma propia &middot; DATAVANT Systems</span>
+                    <h2 class="case-study__title" id="case-3-title">TaskOrbit &mdash; Plataforma privada de gesti&oacute;n interna de proyectos y trabajo</h2>
+                    <span class="case-badge case-badge--internal" aria-label="Plataforma propia en operación interna">Plataforma propia &middot; En operaci&oacute;n interna</span>
+                </div>
+            </header>
+
+            <div class="case-study__body">
+                <div class="case-block">
+                    <span class="case-block__label">Contexto</span>
+                    <p>TaskOrbit naci&oacute; de la necesidad de ordenar el trabajo interno de equipos peque&ntilde;os que depend&iacute;an de planillas, chats y memoria operativa, sin metodolog&iacute;a clara y sin trazabilidad. Es un caso real ya construido y operado en interno, no un producto comercial ni una plataforma p&uacute;blica.</p>
+                </div>
+
+                <div class="case-block">
+                    <span class="case-block__label">Problema</span>
+                    <p>Trabajo disperso entre archivos y conversaciones, falta de evidencia de lo entregado, responsables difusos, contexto perdido entre chats, atrasos invisibles hasta que ya es tarde y sin auditor&iacute;a real de qui&eacute;n hizo qu&eacute; ni cu&aacute;ndo.</p>
+                </div>
+
+                <div class="case-block">
+                    <span class="case-block__label">Soluci&oacute;n</span>
+                    <p>Arquitectura <strong>MVC propia en PHP 8.2 + PostgreSQL</strong>, sin frameworks externos y sin Composer. Modela el trabajo en jerarqu&iacute;a <strong>Proyecto &rarr; Tarea &rarr; Subtarea</strong> con asignaci&oacute;n de responsables, evidencias por entidad, notas contextuales, motor de estados y sem&aacute;foro de seguimiento. Acceso por roles GOD/ADMIN/USER con seguridad endurecida y auditor&iacute;a completa de acciones. Operable tanto en Docker como en Laragon para entornos legacy.</p>
+                </div>
+
+                <div class="case-block">
+                    <span class="case-block__label">Funcionalidades clave</span>
+                    <div class="case-tags">
+                        <span class="case-tag">Jerarqu&iacute;a Proyecto &rarr; Tarea &rarr; Subtarea</span>
+                        <span class="case-tag">Dashboard operativo</span>
+                        <span class="case-tag">Sem&aacute;foro de riesgo</span>
+                        <span class="case-tag">Evidencias por entidad</span>
+                        <span class="case-tag">Notas contextuales</span>
+                        <span class="case-tag">Roles GOD / ADMIN / USER</span>
+                        <span class="case-tag">Notificaciones in-app</span>
+                        <span class="case-tag">Auditor&iacute;a de acciones</span>
+                        <span class="case-tag">Motor de estados</span>
+                        <span class="case-tag">Scheduler</span>
+                        <span class="case-tag">Administraci&oacute;n de usuarios</span>
+                    </div>
+                </div>
+
+                <div class="case-block">
+                    <span class="case-block__label">Stack y enfoque</span>
+                    <div class="case-tags">
+                        <span class="case-tag">PHP 8.2</span>
+                        <span class="case-tag">PostgreSQL</span>
+                        <span class="case-tag">Apache</span>
+                        <span class="case-tag">Docker</span>
+                        <span class="case-tag">Laragon</span>
+                        <span class="case-tag">MVC propio</span>
+                        <span class="case-tag">Sin Composer</span>
+                        <span class="case-tag">Seguridad endurecida</span>
+                    </div>
+                </div>
+
+                <div class="case-block case-block--result">
+                    <span class="case-block__label">Resultado</span>
+                    <p>Trabajo centralizado y trazable, responsables claros, evidencia de lo hecho, detecci&oacute;n temprana de atrasos v&iacute;a sem&aacute;foro y auditor&iacute;a operativa real. Fin de la dispersi&oacute;n en planillas y chats: la operaci&oacute;n interna ahora ocurre en un solo lugar con historial verificable.</p>
+                </div>
+
+                <div class="case-status">
+                    <span class="case-status__dot" aria-hidden="true"></span>
+                    <span class="case-status__label">Estado:</span>
+                    <span class="case-status__value">En operaci&oacute;n interna, con iteraci&oacute;n continua de funcionalidades.</span>
+                </div>
+            </div>
+        </article>
+
+        <!-- ================== CASE 4 (REPRESENTATIVE TEMPLATE) ================== -->
+        <article class="case-study case-study--template dv-animate dv-animate-delay-3" aria-labelledby="case-4-title">
+            <header class="case-study__header">
+                <div class="case-study__index" aria-hidden="true">04</div>
+                <div class="case-study__heading">
                     <span class="case-study__client">Ejemplo representativo</span>
-                    <h2 class="case-study__title" id="case-3-title">Digitalización de captura de datos en una oficina administrativa</h2>
+                    <h2 class="case-study__title" id="case-4-title">Digitalización de captura de datos en una oficina administrativa</h2>
                     <span class="case-badge case-badge--template" aria-label="Ejemplo representativo del tipo de solución">Ejemplo representativo</span>
                 </div>
             </header>

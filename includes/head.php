@@ -29,6 +29,22 @@ $dv_canonical = $dv_scheme . '://' . $dv_host . $dv_uri;
 // --- OG image: absolute URL for crawlers ---
 // Real 1200x630 JPEG generated via .claude/scripts/generate_brand_assets.py.
 $dv_og_image = $dv_scheme . '://' . $dv_host . '/assets/img/og-image.jpg';
+
+// --- Asset cache-busting ---
+// Append `?v=<filemtime>` to every local CSS/JS so browsers re-fetch
+// automatically whenever the file changes on disk. Skips Google Fonts
+// and other external URLs. Falls back to the current request time if
+// filemtime fails (e.g., during a deploy race).
+$dv_asset_root = __DIR__ . '/..';
+$dv_asset_v = function (string $relative_path) use ($dv_asset_root): string {
+    $full = $dv_asset_root . '/' . ltrim($relative_path, '/');
+    $mtime = @filemtime($full);
+    return (string) ($mtime !== false ? $mtime : time());
+};
+
+$dv_v_theme_init  = $dv_asset_v('assets/js/theme-init.js');
+$dv_v_bootstrap_css = $dv_asset_v('assets/css/bootstrap.min.css');
+$dv_v_main_css    = $dv_asset_v('assets/css/main.css');
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -72,7 +88,7 @@ $dv_og_image = $dv_scheme . '://' . $dv_host . '/assets/img/og-image.jpg';
     <link rel="apple-touch-icon" sizes="180x180" href="assets/img/apple-touch-icon.png">
 
     <!-- Early theme detection (CSP-clean, avoids FOUC) -->
-    <script src="assets/js/theme-init.js"></script>
+    <script src="assets/js/theme-init.js?v=<?php echo $dv_v_theme_init; ?>"></script>
 
     <!-- Google Fonts: Ubuntu -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -80,11 +96,11 @@ $dv_og_image = $dv_scheme . '://' . $dv_host . '/assets/img/og-image.jpg';
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
 
     <!-- Bootstrap 3.4.1 (local) -->
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css?v=<?php echo $dv_v_bootstrap_css; ?>">
 
     <!-- DATAVANT Custom Styles (compiled from assets/scss/main.scss) -->
     <!-- Tokens + themes live inside this single file; no separate override layer. -->
-    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/main.css?v=<?php echo $dv_v_main_css; ?>">
 
 <?php if ($current_page === 'inicio'): ?>
     <!-- JSON-LD: Organization (solo en home). Estático, permitido por CSP ('self' aplica a scripts externos; los application/ld+json no ejecutan JS). -->

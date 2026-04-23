@@ -1,6 +1,12 @@
 // ============================================
 // DATAVANT Systems - Header / Navigation
 // Consumes semantic tokens; no hardcoded colors.
+//
+// Mobile navigation:
+//   The mobile drawer is owned by .dv-nav-panel + .dv-nav-overlay and is
+//   driven by `body.dv-nav-open` (toggled in main.js). The hamburger button
+//   is .dv-nav-toggle (no Bootstrap collapse plugin in play). Desktop
+//   behavior of .navbar-collapse is preserved unchanged at >=992px.
 // ============================================
 
 .dv-navbar {
@@ -51,23 +57,108 @@
     }
   }
 
-  .navbar-toggle {
-    border-color: var(--dv-border-subtle);
-    margin-top: 15px;
-    margin-right: 15px;
+  // ----- Custom hamburger toggle (mobile only) -----
+  // Hidden on desktop. Real <button> with animated bars (3 lines <-> X).
+  .dv-nav-toggle {
+    display: none;
+    position: relative;
+    background: transparent;
+    border: 1px solid var(--dv-border-subtle);
+    border-radius: $border-radius;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    margin: 13px 15px 13px 0;
+    float: right; // Bootstrap 3 navbar-header expects floated children
+    cursor: pointer;
+    color: var(--dv-accent);
+    transition:
+      border-color 200ms $ease-out,
+      background-color 200ms $ease-out,
+      transform $transition-press;
 
-    .icon-bar {
-      background-color: var(--dv-accent);
-      height: 2px;
-      width: 22px;
-      transition: background-color $transition-fast;
+    &:focus-visible {
+      outline: 2px solid var(--dv-accent);
+      outline-offset: 2px;
     }
 
-    &:hover, &:focus {
-      background-color: var(--dv-bg-surface);
+    @media (hover: hover) and (pointer: fine) {
+      &:hover {
+        border-color: var(--dv-accent-strong);
+        background-color: var(--dv-accent-soft);
+      }
+    }
+
+    &:active {
+      transform: scale(0.96);
+    }
+
+    // Visually-hidden label (replaces .sr-only here so we can also kill its
+    // pointer events — Bootstrap's .sr-only does not set pointer-events:none,
+    // which can cause a tap to register .sr-only as event.target on tiny
+    // pixel offsets even though it's 1×1.
+    .dv-nav-toggle__sr {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      border: 0;
+      pointer-events: none;
+    }
+
+    .dv-nav-toggle__bars {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 22px;
+      height: 16px;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .dv-nav-toggle__bar {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background-color: currentColor;
+      border-radius: 2px;
+      transform-origin: center;
+      transition:
+        transform 280ms $ease-out,
+        opacity 180ms $ease-out,
+        top 280ms $ease-out;
+
+      &:nth-child(1) { top: 0; }
+      &:nth-child(2) { top: 7px; }
+      &:nth-child(3) { top: 14px; }
+    }
+
+    // Open state: morph to X.
+    &[aria-expanded="true"] {
+      border-color: var(--dv-accent-strong);
+      background-color: var(--dv-accent-soft);
+
+      .dv-nav-toggle__bar:nth-child(1) {
+        top: 7px;
+        transform: rotate(45deg);
+      }
+      .dv-nav-toggle__bar:nth-child(2) {
+        opacity: 0;
+        transform: scaleX(0);
+      }
+      .dv-nav-toggle__bar:nth-child(3) {
+        top: 7px;
+        transform: rotate(-45deg);
+      }
     }
   }
 
+  // ----- Desktop nav list (>=992px) -----
+  // Untouched layout from the original. Mobile overrides come later.
   .navbar-nav {
     > li {
       > a {
@@ -127,10 +218,6 @@
     align-items: center;
     justify-content: flex-end;
     gap: 4px;
-
-    @include responsive(md) {
-      display: block; // Bootstrap 3 collapse behavior on mobile
-    }
   }
 
   // Theme toggle — sits OUTSIDE the nav <ul> for correct semantics
@@ -138,14 +225,7 @@
   .dv-theme-toggle-wrapper {
     display: flex;
     align-items: center;
-    padding: 0 6px;
-
-    @include responsive(md) {
-      padding: 10px 15px 15px;
-      justify-content: flex-start;
-      border-top: 1px solid var(--dv-border-subtle);
-      margin-top: 6px;
-    }
+    padding: 0 6px 0 18px;
   }
 
   .dv-theme-toggle {
@@ -230,6 +310,188 @@
   }
 }
 
+// =====================================================================
+// MOBILE DRAWER  (<992px)
+// Off-canvas panel sliding from the top. Body scroll is locked while open
+// (see `body.dv-nav-open` rule). Desktop layout (>=992px) is untouched.
+// =====================================================================
+
+// Backdrop overlay — sits above the page, below the nav drawer.
+.dv-nav-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.55);
+  opacity: 0;
+  visibility: hidden;
+  z-index: 990;
+  transition: opacity 280ms $ease-out, visibility 280ms $ease-out;
+
+  body.dv-nav-open & {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+@include responsive(md) {
+  // Hide Bootstrap navbar default toggle if anything ever resurrects it,
+  // and show ours.
+  .dv-navbar {
+    .navbar-toggle { display: none !important; } // legacy safety net
+    .dv-nav-toggle { display: inline-block; }
+  }
+
+  // The drawer panel — fixed under the navbar, full-width, sliding down.
+  // Lateral padding mirrors the navbar's per-breakpoint padding so the
+  // drawer rows align under the brand. The horizontal value is driven by
+  // --dv-nav-edge (set per breakpoint in _responsive.scss); fallback 22px.
+  .dv-navbar .dv-nav-panel {
+    position: fixed;
+    top: 70px; // matches navbar min-height; refined when scrolled below
+    left: 0;
+    right: 0;
+    // Use small-viewport height so iOS URL bar doesn't crop the bottom CTA.
+    max-height: calc(100svh - 70px);
+    max-height: calc(100dvh - 70px);
+    height: auto;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+
+    background-color: var(--dv-navbar-bg-scrolled);
+    border-top: 1px solid var(--dv-border-subtle);
+    box-shadow: var(--dv-shadow-lg);
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 0;
+    padding-block: 18px 28px;
+    padding-inline: var(--dv-nav-edge, 22px);
+    margin: 0;
+
+    // Hidden by default on mobile, slides down when body has .dv-nav-open.
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-12px);
+    transition:
+      opacity 260ms $ease-out,
+      transform 320ms $ease-drawer,
+      visibility 320ms $ease-drawer;
+    z-index: 995;
+
+    // Override desktop flex alignment.
+    &.navbar-collapse { // belt-and-braces: same selector specificity
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: flex-start;
+    }
+
+    .navbar-nav {
+      width: 100%;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+
+      > li {
+        width: 100%;
+        float: none;
+
+        > a {
+          display: flex;
+          align-items: center;
+          width: 100%;
+          padding: 14px 14px;
+          font-size: 16px;
+          letter-spacing: 0.6px;
+          color: var(--dv-text-primary);
+          border-radius: $border-radius;
+          border-bottom: 1px solid var(--dv-border-subtle);
+          background-color: transparent;
+          transition:
+            background-color 180ms $ease-out,
+            color 180ms $ease-out,
+            transform 180ms $ease-out;
+
+          // Kill the desktop underline on mobile rows.
+          &::after { display: none; }
+
+          &:hover, &:focus {
+            background-color: var(--dv-accent-soft);
+            color: var(--dv-accent);
+          }
+
+          &:active {
+            transform: scale(0.985);
+          }
+        }
+
+        &:last-of-type > a {
+          border-bottom: none;
+        }
+
+        &.active > a {
+          color: var(--dv-accent);
+          background-color: var(--dv-accent-soft);
+        }
+      }
+
+      // Premium CTA inside the drawer.
+      > li.nav-cta {
+        margin-top: 14px;
+
+        > a {
+          justify-content: center;
+          text-align: center;
+          padding: 14px 22px !important;
+          font-size: 14px !important;
+          border-bottom: none;
+          margin: 0;
+          color: var(--dv-text-inverse) !important;
+          box-shadow: var(--dv-shadow-md);
+        }
+      }
+    }
+
+    // Theme toggle row at the bottom of the drawer — visually grouped.
+    .dv-theme-toggle-wrapper {
+      margin-top: 18px;
+      padding: 14px 4px 4px;
+      border-top: 1px solid var(--dv-border-subtle);
+      justify-content: flex-start;
+    }
+  }
+
+  // Open state — driven by body class set by main.js.
+  body.dv-nav-open .dv-navbar .dv-nav-panel {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  // When the navbar is in the scrolled (compact) state, snap the drawer
+  // top so it never floats above or under the navbar bottom edge.
+  .dv-navbar.navbar-scrolled .dv-nav-panel {
+    top: 56px;
+    max-height: calc(100svh - 56px);
+    max-height: calc(100dvh - 56px);
+  }
+
+  // Body scroll lock while the drawer is open. Scoped to mobile so a stale
+  // body class on a desktop resize cannot lock the page. Scrollbar
+  // compensation avoids the page-content jump that overflow:hidden would
+  // otherwise cause on platforms with persistent scrollbars (Windows, some
+  // Linux DEs). --dv-scrollbar-comp is set by main.js right before locking;
+  // falls back to 0 when the platform uses overlay scrollbars (macOS, mobile).
+  body.dv-nav-open {
+    overflow: hidden;
+    padding-right: var(--dv-scrollbar-comp, 0);
+    touch-action: none;
+  }
+}
+
 // Theme-driven icon swap on the toggle (placed outside the .dv-navbar
 // block so the `:root[data-theme]` selector resolves cleanly).
 :root[data-theme="light"] .dv-theme-toggle {
@@ -237,7 +499,7 @@
   .icon-light { opacity: 1; transform: scale(1) rotate(0); }
 }
 
-// Reduced motion — kill animation on theme toggle
+// Reduced motion — kill animation on theme toggle and on the drawer.
 @media (prefers-reduced-motion: reduce) {
   .dv-theme-toggle {
     transition: none;
@@ -249,5 +511,12 @@
     &:active {
       transform: none;
     }
+  }
+
+  .dv-navbar .dv-nav-toggle .dv-nav-toggle__bar { transition: none; }
+  .dv-navbar .dv-nav-panel,
+  .dv-nav-overlay {
+    transition: opacity 120ms ease, visibility 120ms ease;
+    transform: none !important;
   }
 }
