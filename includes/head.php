@@ -137,6 +137,10 @@ $dv_v_main_css    = $dv_asset_v('assets/css/main.css');
     </script>
 <?php endif; ?>
 </head>
-<body>
+<body class="dv-page dv-page-<?php echo htmlspecialchars($current_page, ENT_QUOTES, 'UTF-8'); ?>">
 <!-- Skip to content (accessibility) -->
 <a href="#main-content" class="dv-skip-link">Saltar al contenido</a>
+
+<!-- Ambient particle backdrop (assets/js/canvas-bg.js). Sits fixed
+     behind page content; per-page surface tokens stay intact. -->
+<canvas id="dv-bg-canvas" class="dv-bg-canvas" aria-hidden="true"></canvas>

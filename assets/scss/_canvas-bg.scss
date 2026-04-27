@@ -1,0 +1,60 @@
+// ============================================
+// DATAVANT Systems — Ambient canvas background
+// Subtle particle field used on /nosotros.php as a non-protagonist
+// page backdrop. The canvas sits fixed behind content; the page-scoped
+// utility section overrides let the body bg + canvas read through, while
+// cards, CTA bands and form surfaces keep their own component bgs.
+// ============================================
+
+.dv-bg-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.85;
+    // Hint to the browser that opacity may change (theme transition);
+    // avoids surprise repaints when --dv-accent flips light↔dark.
+    will-change: opacity;
+}
+
+// Slightly stronger pass on light theme: darker accent at low alpha
+// fades against white, so we lift the canvas opacity to keep parity.
+[data-theme="light"] .dv-bg-canvas {
+    opacity: 0.95;
+}
+
+// Global page-level overrides. Body carries `dv-page` from head.php on
+// every page, so this applies site-wide. Disables the utility section
+// backgrounds so the canvas + body bg show through. Component-level
+// surfaces (cards, CTA banners, form panels, navbar, footer) keep their
+// own backgrounds and visually float above the field.
+.dv-page {
+    .bg-dark-section,
+    .bg-black-section {
+        background-color: transparent;
+    }
+
+    // Hero ships with its own --dv-bg-primary background. Strip it on
+    // every page so the canvas reads through under the grid + glows
+    // (those sit at hero-local z-index 1 and 0 respectively, both above
+    // the body bg). The body still paints --dv-bg-primary underneath.
+    .dv-hero {
+        background-color: transparent;
+    }
+
+    // Lift content above the fixed canvas without hiding the navbar
+    // dropdown/back-to-top button (those have their own higher z-index).
+    main, .dv-footer {
+        position: relative;
+        z-index: 1;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .dv-bg-canvas {
+        opacity: 0.4;
+    }
+}

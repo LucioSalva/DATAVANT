@@ -107,6 +107,7 @@ $dv_footer_asset_v = function (string $relative_path) use ($dv_footer_asset_root
 $dv_v_jquery        = $dv_footer_asset_v('assets/js/jquery.min.js');
 $dv_v_bootstrap_js  = $dv_footer_asset_v('assets/js/bootstrap.min.js');
 $dv_v_main_js       = $dv_footer_asset_v('assets/js/main.js');
+$dv_v_canvas_bg     = $dv_footer_asset_v('assets/js/canvas-bg.js');
 ?>
 <!-- jQuery + Bootstrap 3 JS (local) -->
 <script src="assets/js/jquery.min.js?v=<?php echo $dv_v_jquery; ?>"></script>
@@ -114,6 +115,7 @@ $dv_v_main_js       = $dv_footer_asset_v('assets/js/main.js');
 
 <!-- DATAVANT Custom JS -->
 <script src="assets/js/main.js?v=<?php echo $dv_v_main_js; ?>"></script>
+<script src="assets/js/canvas-bg.js?v=<?php echo $dv_v_canvas_bg; ?>" defer></script>
 
 </body>
 </html>
