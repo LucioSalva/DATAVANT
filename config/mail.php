@@ -1,6 +1,6 @@
-<?php
+﻿<?php
 /**
- * DATAVANT Systems - Mail Configuration
+ * CODLYX Systems - Mail Configuration
  *
  * SMTP settings loaded exclusively from environment variables.
  * There is NO Gmail fallback and NO hardcoded personal address.
@@ -38,7 +38,7 @@ function mail_config() {
         'smtp_pass'       => getenv('SMTP_PASS')       ?: '',
         'smtp_secure'     => getenv('SMTP_SECURE')     ?: 'tls',
         'smtp_from_email' => getenv('SMTP_FROM_EMAIL') ?: '',
-        'smtp_from_name'  => getenv('SMTP_FROM_NAME')  ?: 'DATAVANT Systems',
+        'smtp_from_name'  => getenv('SMTP_FROM_NAME')  ?: 'CODLYX Systems',
         'contact_to'      => getenv('CONTACT_TO_EMAIL') ?: '',
     ];
     return $cfg;

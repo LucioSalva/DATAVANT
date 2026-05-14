@@ -1,6 +1,6 @@
-<?php
+﻿<?php
 /**
- * DATAVANT Systems - Request ID generator.
+ * CODLYX Systems - Request ID generator.
  * Emits RFC 4122 version-4 UUIDs. Used to correlate client responses
  * with server-side audit log entries without exposing PII.
  */

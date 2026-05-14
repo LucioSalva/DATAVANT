@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 50" fill="none">
-  <!-- DATAVANT Systems Logo - Minimalist Geometric -->
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 50" fill="none">
+  <!-- CODLYX Systems Logo - Minimalist Geometric -->
   <!-- Isotipo: Nodos de datos interconectados -->
   <g id="isotipo">
     <!-- Hexagonal node structure -->
@@ -15,6 +15,6 @@
     <line x1="26" y1="18" x2="38" y2="10" stroke="#55F6CB" stroke-width="1" opacity="0.4"/>
   </g>
   <!-- Logotipo -->
-  <text x="54" y="23" font-family="Ubuntu, sans-serif" font-weight="700" font-size="22" fill="#FFFFFF" letter-spacing="2">DATAVANT</text>
+  <text x="54" y="23" font-family="Ubuntu, sans-serif" font-weight="700" font-size="22" fill="#FFFFFF" letter-spacing="2">CODLYX</text>
   <text x="54" y="40" font-family="Ubuntu, sans-serif" font-weight="300" font-size="13" fill="#81F076" letter-spacing="3">SYSTEMS</text>
 </svg>

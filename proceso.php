@@ -1,7 +1,7 @@
-<?php
+﻿<?php
 $current_page     = 'proceso';
-$page_title       = 'Proceso de Trabajo | DATAVANT Systems';
-$page_description = 'Conoce el proceso de trabajo de DATAVANT Systems: análisis, planeación, desarrollo, implementación y mejora continua.';
+$page_title       = 'Proceso de Trabajo | CODLYX Systems';
+$page_description = 'Conoce el proceso de trabajo de CODLYX Systems: análisis, planeación, desarrollo, implementación y mejora continua.';
 include 'includes/head.php';
 include 'includes/header.php';
 ?>

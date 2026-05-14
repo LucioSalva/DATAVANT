@@ -1,7 +1,7 @@
-<?php
+﻿<?php
 $current_page     = 'tecnologias';
-$page_title       = 'Tecnologías | DATAVANT Systems';
-$page_description = 'Stack tecnológico, herramientas y capacidades técnicas de DATAVANT Systems.';
+$page_title       = 'Tecnologías | CODLYX Systems';
+$page_description = 'Stack tecnológico, herramientas y capacidades técnicas de CODLYX Systems.';
 include 'includes/head.php';
 include 'includes/header.php';
 ?>

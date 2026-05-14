@@ -1,5 +1,5 @@
-# ============================================
-# DATAVANT Systems - Apache Configuration (development / HTTP-safe)
+﻿# ============================================
+# CODLYX Systems - Apache Configuration (development / HTTP-safe)
 # ============================================
 # For production (HTTPS with HSTS) copy .htaccess.production over this file.
 # ============================================

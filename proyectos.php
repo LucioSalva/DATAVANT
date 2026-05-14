@@ -1,6 +1,6 @@
-<?php
+﻿<?php
 $current_page     = 'proyectos';
-$page_title       = 'Proyectos | DATAVANT Systems';
+$page_title       = 'Proyectos | CODLYX Systems';
 $page_description = 'Experiencia aplicable en sector público, pyme y educación, más un caso de estudio representativo y estructura lista para testimonios.';
 include 'includes/head.php';
 include 'includes/header.php';
@@ -185,7 +185,7 @@ include 'includes/header.php';
             <header class="case-study__header">
                 <div class="case-study__index" aria-hidden="true">03</div>
                 <div class="case-study__heading">
-                    <span class="case-study__client">Plataforma propia &middot; DATAVANT Systems</span>
+                    <span class="case-study__client">Plataforma propia &middot; CODLYX Systems</span>
                     <h2 class="case-study__title" id="case-3-title">TaskOrbit &mdash; Plataforma privada de gesti&oacute;n interna de proyectos y trabajo</h2>
                     <span class="case-badge case-badge--internal" aria-label="Plataforma propia en operación interna">Plataforma propia &middot; En operaci&oacute;n interna</span>
                 </div>

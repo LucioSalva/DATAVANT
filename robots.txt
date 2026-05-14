@@ -1,4 +1,4 @@
-# DATAVANT Systems - robots.txt
+﻿# CODLYX Systems - robots.txt
 # Sitio profesional. Permite indexación de páginas públicas,
 # bloquea rutas sensibles y expone el sitemap.
 
@@ -20,4 +20,4 @@ Disallow: /CONFIGURATION.md
 Disallow: /skills-lock.json
 Disallow: /.claude/
 
-Sitemap: https://datavant.systems/sitemap.xml
+Sitemap: https://codlyx.systems/sitemap.xml

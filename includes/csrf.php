@@ -1,6 +1,6 @@
-<?php
+﻿<?php
 /**
- * DATAVANT Systems - CSRF token pool.
+ * CODLYX Systems - CSRF token pool.
  *
  * Multi-tab-safe CSRF defense. Each session holds a pool of up to
  * CSRF_POOL_MAX tokens; every token is valid for CSRF_TTL seconds and

@@ -1,8 +1,8 @@
-<?php
+﻿<?php
 $current_page     = 'recursos';
-$page_title       = 'Por qué tu consulta PostgreSQL es lenta aunque tengas un índice | DATAVANT Systems';
+$page_title       = 'Por qué tu consulta PostgreSQL es lenta aunque tengas un índice | CODLYX Systems';
 $page_description = 'Casos reales donde el optimizer de PostgreSQL ignora un índice: orden de columnas, funciones en el WHERE, predicados no sargables e índices parciales mal diseñados.';
-$page_keywords    = 'postgresql, índices, explain analyze, optimización, consultas lentas, sargable, datavant';
+$page_keywords    = 'postgresql, índices, explain analyze, optimización, consultas lentas, sargable, codlyx';
 include __DIR__ . '/../includes/head.php';
 include __DIR__ . '/../includes/header.php';
 ?>

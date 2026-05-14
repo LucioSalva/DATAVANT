@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * Plantilla base para artículos de la sección «Recursos».
  *
@@ -17,9 +17,9 @@
  */
 
 $current_page     = 'recursos';
-$page_title       = 'TODO: Título del artículo | DATAVANT Systems';
+$page_title       = 'TODO: Título del artículo | CODLYX Systems';
 $page_description = 'TODO: Descripción breve (150-160 caracteres) con las palabras clave más relevantes.';
-$page_keywords    = 'TODO, palabras, clave, separadas, por, coma, datavant';
+$page_keywords    = 'TODO, palabras, clave, separadas, por, coma, codlyx';
 
 include __DIR__ . '/../includes/head.php';
 include __DIR__ . '/../includes/header.php';

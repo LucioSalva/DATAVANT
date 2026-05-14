@@ -1,7 +1,7 @@
-<?php
+﻿<?php
 $current_page     = 'nosotros';
-$page_title       = 'Sobre mí | DATAVANT Systems';
-$page_description = 'Conoce a DATAVANT Systems: enfoque técnico, visión profesional y el ingeniero detrás de soluciones tecnológicas que funcionan.';
+$page_title       = 'Sobre mí | CODLYX Systems';
+$page_description = 'Conoce a CODLYX Systems: enfoque técnico, visión profesional y el ingeniero detrás de soluciones tecnológicas que funcionan.';
 include 'includes/head.php';
 include 'includes/header.php';
 ?>
@@ -35,7 +35,7 @@ include 'includes/header.php';
 
                 <div class="about-content dv-animate">
                     <p>
-                        <strong class="dv-brand-strong">DATAVANT Systems</strong> nace de una idea clara: ofrecer soluciones tecnológicas que realmente funcionan. No soy una consultora genérica que vende horas; soy un ingeniero que entiende el problema antes de escribir la primera línea de código.
+                        <strong class="dv-brand-strong">CODLYX Systems</strong> nace de una idea clara: ofrecer soluciones tecnológicas que realmente funcionan. No soy una consultora genérica que vende horas; soy un ingeniero que entiende el problema antes de escribir la primera línea de código.
                     </p>
                     <p>
                         Trabajo con empresas que necesitan resultados tangibles: sitios web que convierten, bases de datos que escalan, procesos automatizados que eliminan el trabajo manual y sistemas de soporte que mantienen la operación estable. Mi stack incluye PHP, MySQL, PostgreSQL, servidores Linux, scripting en Bash y Python, y herramientas de infraestructura moderna.
@@ -66,7 +66,7 @@ include 'includes/header.php';
                             Ingeniero en Sistemas Computacionales con una trayectoria construida sobre proyectos reales, no certificaciones decorativas. Desde el diseño de bases de datos empresariales hasta la implementación de aplicaciones web completas, mi enfoque siempre ha sido el mismo: entender el problema a fondo y construir la solución correcta.
                         </p>
                         <p>
-                            Con experiencia en desarrollo full-stack, administración de servidores, automatización de procesos y soporte técnico especializado, lidero cada proyecto de DATAVANT Systems con un enfoque práctico y orientado a resultados. Creo firmemente en la comunicación directa con el cliente, en la documentación como herramienta profesional y en que la mejor tecnología es la que resuelve sin complicar.
+                            Con experiencia en desarrollo full-stack, administración de servidores, automatización de procesos y soporte técnico especializado, lidero cada proyecto de CODLYX Systems con un enfoque práctico y orientado a resultados. Creo firmemente en la comunicación directa con el cliente, en la documentación como herramienta profesional y en que la mejor tecnología es la que resuelve sin complicar.
                         </p>
                         <p>
                             Cuando no estoy resolviendo problemas técnicos, estoy investigando nuevas herramientas, optimizando flujos de trabajo o explorando formas de hacer las cosas mejor.

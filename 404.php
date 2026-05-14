@@ -1,6 +1,6 @@
-<?php
+﻿<?php
 $current_page     = '404';
-$page_title       = 'Página no encontrada | DATAVANT Systems';
+$page_title       = 'Página no encontrada | CODLYX Systems';
 $page_description = 'La página que buscas no existe o fue movida.';
 include 'includes/head.php';
 include 'includes/header.php';

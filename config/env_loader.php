@@ -1,6 +1,6 @@
-<?php
+﻿<?php
 /**
- * DATAVANT Systems - Lightweight .env Loader
+ * CODLYX Systems - Lightweight .env Loader
  *
  * Parses a .env file from the project root and loads each KEY=VALUE pair
  * into the environment via putenv(), so getenv() works throughout the app.

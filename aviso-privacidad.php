@@ -1,9 +1,9 @@
-<?php
+﻿<?php
 require_once __DIR__ . '/includes/bootstrap.php';
 
 $current_page     = 'aviso-privacidad';
-$page_title       = 'Aviso de Privacidad | DATAVANT Systems';
-$page_description = 'Aviso de privacidad integral de DATAVANT Systems conforme a la Ley Federal de Protección de Datos Personales en Posesión de los Particulares (México).';
+$page_title       = 'Aviso de Privacidad | CODLYX Systems';
+$page_description = 'Aviso de privacidad integral de CODLYX Systems conforme a la Ley Federal de Protección de Datos Personales en Posesión de los Particulares (México).';
 
 $contact_email = getenv('CONTACT_TO_EMAIL');
 if (!is_string($contact_email) || $contact_email === '') {
@@ -36,7 +36,7 @@ include __DIR__ . '/includes/header.php';
                     <h2>1. Responsable del tratamiento</h2>
                     <p>
                         Soy <strong>Ing. Humberto Salvador Ruiz Lucio</strong>, quien opera bajo la marca
-                        <strong>DATAVANT Systems</strong>. Soy responsable del tratamiento de los datos personales
+                        <strong>CODLYX Systems</strong>. Soy responsable del tratamiento de los datos personales
                         que recabo a través de este sitio. Para cualquier asunto relacionado con este aviso, puedes
                         contactarme en
                         <a href="mailto:<?php echo $contact_email_safe; ?>"><?php echo $contact_email_safe; ?></a>.

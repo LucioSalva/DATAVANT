@@ -1,5 +1,5 @@
-/* ============================================
-   DATAVANT Systems — Ambient canvas background
+﻿/* ============================================
+   CODLYX Systems — Ambient canvas background
    Subtle particle network used as page backdrop on /nosotros.php.
 
    Behavior contract:

@@ -1,8 +1,8 @@
-<?php
+﻿<?php
 $current_page     = 'recursos';
-$page_title       = 'Armando un homelab con Docker para desarrollo serio sin gastar en la nube | DATAVANT Systems';
+$page_title       = 'Armando un homelab con Docker para desarrollo serio sin gastar en la nube | CODLYX Systems';
 $page_description = 'Cómo armar un homelab con Docker Compose en una PC vieja: PostgreSQL persistente, red interna, proxy reverso simple y buenas prácticas de volúmenes y backups.';
-$page_keywords    = 'docker, homelab, docker-compose, postgresql, nginx, proxy reverso, desarrollo, DATAVANT';
+$page_keywords    = 'docker, homelab, docker-compose, postgresql, nginx, proxy reverso, desarrollo, CODLYX';
 include __DIR__ . '/../includes/head.php';
 include __DIR__ . '/../includes/header.php';
 ?>
@@ -43,7 +43,7 @@ include __DIR__ . '/../includes/header.php';
                 <p>El error inicial es querer meter todos los servicios en un solo <code>docker-compose.yml</code>. Escala mal. Prefiero un directorio por stack independiente, con su propio compose:</p>
 <pre class="dv-article-code"><code>~/homelab/
   postgres/        docker-compose.yml + data
-  web-datavant/    docker-compose.yml + código
+  web-codlyx/    docker-compose.yml + código
   scripts/         docker-compose.yml (cron jobs)
   proxy/           docker-compose.yml (nginx o caddy)</code></pre>
                 <p>Cada stack se levanta y se apaga independiente. Si un servicio se rompe, los otros no se enteran. Para comunicarlos uso una red Docker externa compartida; ahí el proxy se conecta a cualquiera.</p>
@@ -92,11 +92,11 @@ networks:
                 <h2>Proxy reverso: Caddy o Nginx, depende del caso</h2>
                 <p>Para desarrollo personal en LAN uso Caddy porque me ahorra certificados: genera TLS solo si lo apuntas a un dominio real. Para staging que quiero que se parezca más a producción uso Nginx, porque es el mismo motor que tengo después en el servidor. La configuración mínima de Nginx para servir mi stack PHP es:</p>
 <pre class="dv-article-code"><code>upstream app {
-  server web-datavant:80;
+  server web-codlyx:80;
 }
 server {
   listen 80;
-  server_name datavant.local;
+  server_name codlyx.local;
   location / {
     proxy_pass http://app;
     proxy_set_header Host $host;
@@ -104,7 +104,7 @@ server {
     proxy_set_header X-Forwarded-Proto $scheme;
   }
 }</code></pre>
-                <p>Entrada <code>127.0.0.1 datavant.local</code> en <code>/etc/hosts</code> y ya puedo navegar al sitio por nombre, exactamente como lo haré en producción. Eso detecta problemas de <code>Host</code> y redirects que en <code>localhost:8080</code> no se veían.</p>
+                <p>Entrada <code>127.0.0.1 codlyx.local</code> en <code>/etc/hosts</code> y ya puedo navegar al sitio por nombre, exactamente como lo haré en producción. Eso detecta problemas de <code>Host</code> y redirects que en <code>localhost:8080</code> no se veían.</p>
 
                 <h2>Respaldos: el día que se necesita es el día que no se tiene</h2>
                 <p>Un script sencillo en cron local que hace <code>pg_dump</code> a las 3 AM y lo guarda comprimido en un disco externo:</p>

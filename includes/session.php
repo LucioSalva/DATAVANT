@@ -1,6 +1,6 @@
-<?php
+﻿<?php
 /**
- * DATAVANT Systems - Centralized session bootstrap.
+ * CODLYX Systems - Centralized session bootstrap.
  *
  * Single point of session configuration. Every page that needs a session
  * must include this file (via includes/bootstrap.php). Individual pages

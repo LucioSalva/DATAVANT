@@ -1,6 +1,6 @@
-<?php
+﻿<?php
 /**
- * DATAVANT Systems - Head Include
+ * CODLYX Systems - Head Include
  * Meta tags, CSS, fonts, early theme detection (CSP-clean: no inline JS).
  *
  * Variables expected (all optional, sane defaults applied):
@@ -8,9 +8,9 @@
  */
 
 // --- Default page meta ---
-$page_title       = isset($page_title) ? $page_title : 'DATAVANT Systems | Soluciones Tecnológicas Profesionales';
-$page_description = isset($page_description) ? $page_description : 'DATAVANT Systems ofrece desarrollo web, bases de datos, automatización, soporte técnico e infraestructura tecnológica para empresas que buscan resultados reales.';
-$page_keywords    = isset($page_keywords) ? $page_keywords : 'desarrollo web, bases de datos, automatización, soporte técnico, consultoría tecnológica, DATAVANT Systems';
+$page_title       = isset($page_title) ? $page_title : 'CODLYX Systems | Soluciones Tecnológicas Profesionales';
+$page_description = isset($page_description) ? $page_description : 'CODLYX Systems ofrece desarrollo web, bases de datos, automatización, soporte técnico e infraestructura tecnológica para empresas que buscan resultados reales.';
+$page_keywords    = isset($page_keywords) ? $page_keywords : 'desarrollo web, bases de datos, automatización, soporte técnico, consultoría tecnológica, CODLYX Systems';
 $current_page     = isset($current_page) ? $current_page : 'inicio';
 
 // --- Canonical URL (APP_URL_SCHEME + host + current URI) ---
@@ -20,7 +20,7 @@ if (!is_string($dv_scheme) || ($dv_scheme !== 'http' && $dv_scheme !== 'https'))
 }
 $dv_host = isset($_SERVER['HTTP_HOST']) && is_string($_SERVER['HTTP_HOST'])
     ? $_SERVER['HTTP_HOST']
-    : 'datavant.systems';
+    : 'codlyx.systems';
 $dv_uri  = isset($_SERVER['REQUEST_URI']) && is_string($_SERVER['REQUEST_URI'])
     ? strtok($_SERVER['REQUEST_URI'], '?')
     : '/';
@@ -58,7 +58,7 @@ $dv_v_main_css    = $dv_asset_v('assets/css/main.css');
     <title><?php echo htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8'); ?></title>
     <meta name="description" content="<?php echo htmlspecialchars($page_description, ENT_QUOTES, 'UTF-8'); ?>">
     <meta name="keywords" content="<?php echo htmlspecialchars($page_keywords, ENT_QUOTES, 'UTF-8'); ?>">
-    <meta name="author" content="DATAVANT Systems">
+    <meta name="author" content="CODLYX Systems">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="<?php echo htmlspecialchars($dv_canonical, ENT_QUOTES, 'UTF-8'); ?>">
 
@@ -67,14 +67,14 @@ $dv_v_main_css    = $dv_asset_v('assets/css/main.css');
     <meta property="og:description" content="<?php echo htmlspecialchars($page_description, ENT_QUOTES, 'UTF-8'); ?>">
     <meta property="og:type" content="website">
     <meta property="og:url" content="<?php echo htmlspecialchars($dv_canonical, ENT_QUOTES, 'UTF-8'); ?>">
-    <meta property="og:site_name" content="DATAVANT Systems">
+    <meta property="og:site_name" content="CODLYX Systems">
     <meta property="og:locale" content="es_MX">
     <meta property="og:image" content="<?php echo htmlspecialchars($dv_og_image, ENT_QUOTES, 'UTF-8'); ?>">
     <meta property="og:image:secure_url" content="<?php echo htmlspecialchars($dv_og_image, ENT_QUOTES, 'UTF-8'); ?>">
     <meta property="og:image:type" content="image/jpeg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="DATAVANT Systems — Soluciones tecnológicas: desarrollo, datos, automatización, infraestructura.">
+    <meta property="og:image:alt" content="CODLYX Systems — Soluciones tecnológicas: desarrollo, datos, automatización, infraestructura.">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
@@ -98,7 +98,7 @@ $dv_v_main_css    = $dv_asset_v('assets/css/main.css');
     <!-- Bootstrap 3.4.1 (local) -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css?v=<?php echo $dv_v_bootstrap_css; ?>">
 
-    <!-- DATAVANT Custom Styles (compiled from assets/scss/main.scss) -->
+    <!-- CODLYX Custom Styles (compiled from assets/scss/main.scss) -->
     <!-- Tokens + themes live inside this single file; no separate override layer. -->
     <link rel="stylesheet" href="assets/css/main.css?v=<?php echo $dv_v_main_css; ?>">
 
@@ -108,7 +108,7 @@ $dv_v_main_css    = $dv_asset_v('assets/css/main.css');
     {
       "@context": "https://schema.org",
       "@type": "Organization",
-      "name": "DATAVANT Systems",
+      "name": "CODLYX Systems",
       "url": "<?php echo htmlspecialchars($dv_scheme . '://' . $dv_host . '/', ENT_QUOTES, 'UTF-8'); ?>",
       "logo": "<?php echo htmlspecialchars($dv_scheme . '://' . $dv_host . '/assets/img/logo-icon.svg', ENT_QUOTES, 'UTF-8'); ?>",
       "description": "Desarrollo web, bases de datos, automatización e infraestructura tecnológica a medida para empresas en México.",

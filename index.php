@@ -1,6 +1,6 @@
-<?php
+﻿<?php
 $current_page     = 'inicio';
-$page_title       = 'DATAVANT Systems | Soluciones Tecnológicas Profesionales';
+$page_title       = 'CODLYX Systems | Soluciones Tecnológicas Profesionales';
 $page_description = 'Desarrollo web, bases de datos, automatización e infraestructura tecnológica. Soluciones profesionales para empresas que buscan resultados reales.';
 include 'includes/head.php';
 include 'includes/header.php';
@@ -123,7 +123,7 @@ include 'includes/header.php';
     <div class="container">
 
         <div class="section-title dv-animate">
-            <h2>Por qué DATAVANT Systems</h2>
+            <h2>Por qué CODLYX Systems</h2>
             <span class="title-accent" aria-hidden="true"></span>
             <p>No vendo tecnología por moda. Resuelvo problemas reales con ingeniería aplicada.</p>
         </div>
@@ -180,7 +180,7 @@ include 'includes/header.php';
                 <h2>¿Necesitas ayuda técnica?</h2>
                 <span class="title-accent" aria-hidden="true"></span>
                 <p class="dv-support-lead dv-mt-md">
-                    Desde DATAVANT Systems ofrezco soporte técnico profesional para empresas, negocios y usuarios que necesitan resolver problemas reales. Desde el diagnóstico de fallas hasta el mantenimiento preventivo, estoy listo para ayudarte.
+                    Desde CODLYX Systems ofrezco soporte técnico profesional para empresas, negocios y usuarios que necesitan resolver problemas reales. Desde el diagnóstico de fallas hasta el mantenimiento preventivo, estoy listo para ayudarte.
                 </p>
                 <ul class="dv-check-list">
                     <li>Soporte presencial y remoto</li>

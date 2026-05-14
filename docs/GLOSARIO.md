@@ -1,4 +1,4 @@
-# Glosario institucional — DATAVANT Systems
+﻿# Glosario institucional — CODLYX Systems
 
 Documento de referencia para mantener consistencia ortográfica, terminológica y de tono en todos los textos visibles al usuario del sitio.
 
@@ -176,7 +176,7 @@ Todas las preguntas y exclamaciones llevan apertura en español:
 
 Se conservan tal cual aparecen oficialmente:
 
-- **DATAVANT Systems** (la palabra DATAVANT se escribe en mayúsculas).
+- **CODLYX Systems** (la palabra CODLYX se escribe en mayúsculas).
 - **PostgreSQL**, **Docker**, **Bootstrap**, **Ubuntu**, **PHP**, **LinkedIn**, **GitHub**, **Gmail**.
 - Nombres de personas: respetar tildes y capitalización reales (por ejemplo, **Humberto Salvador Ruiz Lucio**).
 - Nombres institucionales de clientes y dependencias: no se traducen, no se abrevian salvo que el nombre oficial sea la abreviatura.
@@ -202,7 +202,7 @@ Los siguientes no son texto visible y no deben ser tocados por el corrector orto
 
 1. Redactar el texto en español mexicano formal, con todos los acentos.
 2. Ejecutar `npm run lint:spell` antes del commit.
-3. Si `cspell` reporta términos desconocidos que son correctos (nombres propios, tecnicismos), agregarlos al diccionario `datavant` o `tech` en `cspell.json`.
+3. Si `cspell` reporta términos desconocidos que son correctos (nombres propios, tecnicismos), agregarlos al diccionario `codlyx` o `tech` en `cspell.json`.
 4. Si se introducen términos nuevos del dominio, documentarlos en este glosario (sección 2).
 5. Revisión visual final en el navegador, confirmando que no hay palabras sin acento, signos sin apertura ni inconsistencias con el glosario.
 

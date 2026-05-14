@@ -1,10 +1,10 @@
-<?php
+﻿<?php
 require_once __DIR__ . '/includes/bootstrap.php';
 require_once __DIR__ . '/config/mail.php';
 
 $current_page     = 'contacto';
-$page_title       = 'Contacto | DATAVANT Systems';
-$page_description = 'Contacta a DATAVANT Systems para desarrollo web, bases de datos, automatización y soluciones tecnológicas profesionales.';
+$page_title       = 'Contacto | CODLYX Systems';
+$page_description = 'Contacta a CODLYX Systems para desarrollo web, bases de datos, automatización y soluciones tecnológicas profesionales.';
 include __DIR__ . '/includes/head.php';
 include __DIR__ . '/includes/header.php';
 

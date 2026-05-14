@@ -1,6 +1,6 @@
-<?php
+﻿<?php
 $current_page     = 'servicios';
-$page_title       = 'Servicios | DATAVANT Systems';
+$page_title       = 'Servicios | CODLYX Systems';
 $page_description = 'Cinco núcleos de servicio: desarrollo a medida, datos y bases de datos, automatización e integración, infraestructura y soporte, y consultoría tecnológica.';
 include 'includes/head.php';
 include 'includes/header.php';

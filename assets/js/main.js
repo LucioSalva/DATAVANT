@@ -1,5 +1,5 @@
-/* ============================================
-   DATAVANT Systems - Main JavaScript
+﻿/* ============================================
+   CODLYX Systems - Main JavaScript
    Dependencies: jQuery 3.7.1, Bootstrap 3.4.1
    ============================================ */
 

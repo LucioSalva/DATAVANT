@@ -1,7 +1,7 @@
-#!/bin/bash
+﻿#!/bin/bash
 
 # ============================================
-# DATAVANT Systems - Container Entrypoint
+# CODLYX Systems - Container Entrypoint
 # Compiles SCSS if source files exist, then
 # hands off to Apache.
 # ============================================

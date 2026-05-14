@@ -1,5 +1,5 @@
-# ============================================
-# DATAVANT Systems - Docker Compose
+﻿# ============================================
+# CODLYX Systems - Docker Compose
 # PHP 8.2 + Apache corporate website
 # ============================================
 
@@ -8,7 +8,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: datavant-web
+    container_name: codlyx-web
     ports:
       - "8088:80"
     # Dev: bind-mount the source tree for live editing.
@@ -28,7 +28,7 @@ services:
       - SMTP_PASS=${SMTP_PASS:-}
       - SMTP_SECURE=${SMTP_SECURE:-tls}
       - SMTP_FROM_EMAIL=${SMTP_FROM_EMAIL:-}
-      - SMTP_FROM_NAME=${SMTP_FROM_NAME:-DATAVANT Systems}
+      - SMTP_FROM_NAME=${SMTP_FROM_NAME:-CODLYX Systems}
       - CONTACT_TO_EMAIL=${CONTACT_TO_EMAIL:-}
       - LOG_IP_SALT=${LOG_IP_SALT:-}
     healthcheck:

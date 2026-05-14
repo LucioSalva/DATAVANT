@@ -1,5 +1,5 @@
-/* ============================================
-   DATAVANT Systems - Early theme detection
+﻿/* ============================================
+   CODLYX Systems - Early theme detection
    Loaded BEFORE main.css to prevent FOUC.
    Keeps the <head> free of inline <script> so CSP can drop 'unsafe-inline'
    from script-src.

@@ -1,4 +1,4 @@
-# DATAVANT Systems — Configuration Guide
+﻿# CODLYX Systems — Configuration Guide
 
 Guía breve para dejar el sitio operativo en un entorno nuevo (local, staging o producción).
 
@@ -30,7 +30,7 @@ Si alguna variable obligatoria está vacía, es un placeholder (`__ROTATE_ME__`,
 
 1. Activa verificación en dos pasos en la cuenta: <https://myaccount.google.com/security>.
 2. Entra a <https://myaccount.google.com/apppasswords>.
-3. Crea una contraseña de aplicación llamada, por ejemplo, `DATAVANT Web`.
+3. Crea una contraseña de aplicación llamada, por ejemplo, `CODLYX Web`.
 4. Copia el string de 16 caracteres (puedes dejar o quitar los espacios) y pégalo como `SMTP_PASS` en `.env`.
 5. Nunca la guardes en el repo, en Docker images ni en logs.
 

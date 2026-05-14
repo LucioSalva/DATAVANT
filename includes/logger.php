@@ -1,6 +1,6 @@
-<?php
+﻿<?php
 /**
- * DATAVANT Systems - Structured event logger.
+ * CODLYX Systems - Structured event logger.
  *
  * Emits one JSONL line per event into logs/events_YYYY-MM.log.
  * STRICT allowlist: only request_id, timestamp, event, ip_hash,

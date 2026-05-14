@@ -1,7 +1,7 @@
-<?php
+﻿<?php
 $current_page     = 'recursos';
-$page_title       = 'Recursos | DATAVANT Systems';
-$page_description = 'Artículos técnicos sobre PostgreSQL, digitalización de trámites y homelab con Docker escritos desde la experiencia real de DATAVANT Systems.';
+$page_title       = 'Recursos | CODLYX Systems';
+$page_description = 'Artículos técnicos sobre PostgreSQL, digitalización de trámites y homelab con Docker escritos desde la experiencia real de CODLYX Systems.';
 include 'includes/head.php';
 include 'includes/header.php';
 ?>

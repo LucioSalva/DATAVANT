@@ -1,4 +1,4 @@
-# DATAVANT Systems — Security & Credential Rotation
+﻿# CODLYX Systems — Security & Credential Rotation
 
 This document explains how to rotate secrets, harden the deployment, and respond to credential exposure incidents. All operational secrets live in `.env`, which is excluded from version control by `.gitignore`.
 
@@ -16,8 +16,8 @@ The committed value is no longer present in `.env` — it has been replaced with
 
 1. Sign in to the Google account used for SMTP (`SMTP_USER` in `.env`).
 2. Open https://myaccount.google.com/apppasswords.
-3. **Revoke** the old "DATAVANT Systems" entry (or whatever label was used). This immediately invalidates the leaked password.
-4. Click **Create app password**, label it `DATAVANT Systems Web`, generate, and copy the 16-character value.
+3. **Revoke** the old "CODLYX Systems" entry (or whatever label was used). This immediately invalidates the leaked password.
+4. Click **Create app password**, label it `CODLYX Systems Web`, generate, and copy the 16-character value.
 5. Open `.env` and replace:
    ```
    SMTP_PASS=__ROTATE_ME__

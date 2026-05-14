@@ -1,6 +1,6 @@
-<?php
+﻿<?php
 /**
- * DATAVANT Systems - Application bootstrap.
+ * CODLYX Systems - Application bootstrap.
  *
  * Single entry point for every page and endpoint. Responsible for:
  *   1. Loading environment variables from .env (no-op in Docker).

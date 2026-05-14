@@ -1,12 +1,12 @@
-# ============================================
-# DATAVANT Systems - PHP + Apache + SCSS
+﻿# ============================================
+# CODLYX Systems - PHP + Apache + SCSS
 # Production-ready single-stage build
 # Runs as www-data (non-root) after setup.
 # ============================================
 
 FROM php:8.2-apache
 
-LABEL maintainer="DATAVANT Systems"
+LABEL maintainer="CODLYX Systems"
 LABEL description="PHP 8.2 + Apache corporate website with SCSS compilation"
 
 # ----- System packages + Dart Sass -----

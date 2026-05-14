@@ -1,6 +1,6 @@
-<?php
+﻿<?php
 /**
- * DATAVANT Systems - IP-based sliding-window rate limiter.
+ * CODLYX Systems - IP-based sliding-window rate limiter.
  *
  * File-backed counter stored in logs/rate_limit.json. Each key is
  * sha256(ip + LOG_IP_SALT) and each value is an array of unix timestamps

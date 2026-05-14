@@ -1,6 +1,6 @@
-<?php
+﻿<?php
 /**
- * DATAVANT Systems - Header / Navigation
+ * CODLYX Systems - Header / Navigation
  */
 ?>
 <!-- Navigation -->
@@ -27,9 +27,9 @@
                     <span class="dv-nav-toggle__bar"></span>
                 </span>
             </button>
-            <a class="navbar-brand" href="index.php" aria-label="DATAVANT Systems — Inicio">
+            <a class="navbar-brand" href="index.php" aria-label="CODLYX Systems — Inicio">
                 <img src="assets/img/logo-icon.svg" alt="" class="brand-logo" aria-hidden="true">
-                <span class="brand-text">DATAVANT <span>Systems</span></span>
+                <span class="brand-text">CODLYX <span>Systems</span></span>
             </a>
         </div>
 

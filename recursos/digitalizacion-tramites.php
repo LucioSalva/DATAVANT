@@ -1,8 +1,8 @@
-<?php
+﻿<?php
 $current_page     = 'recursos';
-$page_title       = 'Cómo empezar a digitalizar un trámite sin rehacer todo el proceso | DATAVANT Systems';
+$page_title       = 'Cómo empezar a digitalizar un trámite sin rehacer todo el proceso | CODLYX Systems';
 $page_description = 'Guía práctica para digitalizar un trámite existente sin cambiar el proceso: capturar datos donde hoy hay papel, priorizar validación y avanzar por etapas.';
-$page_keywords    = 'digitalización, trámites, gobierno, formularios, validación, PHP, PostgreSQL, DATAVANT';
+$page_keywords    = 'digitalización, trámites, gobierno, formularios, validación, PHP, PostgreSQL, CODLYX';
 include __DIR__ . '/../includes/head.php';
 include __DIR__ . '/../includes/header.php';
 ?>

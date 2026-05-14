@@ -1,6 +1,6 @@
-<?php
+﻿<?php
 /**
- * DATAVANT Systems - Contact Form Handler
+ * CODLYX Systems - Contact Form Handler
  *
  * Pipeline:
  *   1. Method check                → 405
@@ -285,9 +285,9 @@ try {
     $mail->addReplyTo($email, $nombre);
 
     $mail->isHTML(false);
-    $mail->Subject = '[DATAVANT Web] ' . $asunto;
+    $mail->Subject = '[CODLYX Web] ' . $asunto;
 
-    $body  = "Nuevo mensaje desde el formulario de contacto de DATAVANT Systems\n";
+    $body  = "Nuevo mensaje desde el formulario de contacto de CODLYX Systems\n";
     $body .= "================================================================\n\n";
     $body .= "Nombre:    {$nombre}\n";
     $body .= "Email:     {$email}\n";

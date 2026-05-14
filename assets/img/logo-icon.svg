@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" fill="none">
-  <!-- DATAVANT Systems - Icon Only -->
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" fill="none">
+  <!-- CODLYX Systems - Icon Only -->
   <path d="M20 8 L32 2 L44 8 L44 20 L32 26 L20 20 Z" stroke="#81F076" stroke-width="1.5" fill="none" opacity="0.6"/>
   <path d="M8 20 L20 14 L32 20 L32 32 L20 38 L8 32 Z" stroke="#6BF3A1" stroke-width="1.5" fill="none" opacity="0.4"/>
   <circle cx="26" cy="18" r="3.5" fill="#81F076"/>
